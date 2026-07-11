@@ -52,7 +52,7 @@ window.LIAG = {
     creative:  { file: "downloads/francesco-nappi-creative-projects.pdf",  ready: false },
     technical: { file: "downloads/francesco-nappi-technical-builder.pdf",  ready: false },
     pitch:     { file: "downloads/virtoo-pitch-deck.pdf",                  ready: false },
-    complete:  { file: "downloads/francesco-nappi-complete-cv.pdf",        ready: true  }
+    complete:  { file: "downloads/francesco-nappi-complete-cv.pdf",        ready: false }
   },
 
   /* ---- ruoli: ordine, avatar, tier, coordinate sulle dashboard ------

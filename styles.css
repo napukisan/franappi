@@ -54,7 +54,7 @@ img { -webkit-user-drag: none; user-select: none; }
   width: min(100vw, calc(100svh * 1.78125));
   aspect-ratio: 2736 / 1536;
   container-type: size;
-  background-image: url("assets/backgrounds/dashboard-desktop-v2.png");
+  background-image: url("assets/backgrounds/dashboard-desktop-v2.webp");
   background-size: 100% 100%;
   background-repeat: no-repeat;
 }
@@ -340,7 +340,7 @@ body.layout-m .scene { background: #000; }
 body.layout-m .stage {
   width: 100vw;
   aspect-ratio: 941 / 1672;
-  background-image: url("assets/backgrounds/dashboard-mobile-v4.png");
+  background-image: url("assets/backgrounds/dashboard-mobile-v4.webp");
 }
 
 /* nome dentro il banner (più stretto) in alto */

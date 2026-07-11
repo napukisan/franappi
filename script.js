@@ -16,6 +16,11 @@
   function applyLayout() {
     var m = FORCE === "m" ? true : FORCE === "d" ? false : mql.matches;
     document.body.classList.toggle("layout-m", m);
+    /* Render only the avatar variant used by the active breakpoint. */
+    if (document.getElementById("roles") && lang) {
+      renderRoles();
+      renderSigns();
+    }
   }
   if (mql.addEventListener) mql.addEventListener("change", applyLayout);
   else if (mql.addListener) mql.addListener(applyLayout);
@@ -82,11 +87,10 @@
       btn.style.cssText =
         "--dcx:" + r.d.cx + "%;--db:" + r.d.bottom + "%;--dh:" + r.d.h + "cqh;" +
         "--mcx:" + r.m.cx + "%;--mb:" + r.m.bottom + "%;--mh:" + r.m.h + "cqh;";
-      var imgs =
-        '<img class="role__img" src="' + esc(r.avatar) + '" alt="" draggable="false" />';
-      if (r.mAvatar) {
-        imgs += '<img class="role__img role__img--m" src="' + esc(r.mAvatar) + '" alt="" draggable="false" />';
-      }
+      var isMobile = document.body.classList.contains("layout-m");
+      var avatar = isMobile && r.mAvatar ? r.mAvatar : r.avatar;
+      var imgs = '<img class="role__img' + (isMobile && r.mAvatar ? ' role__img--m' : '') +
+        '" src="' + esc(avatar) + '" alt="" draggable="false" />';
       btn.innerHTML = imgs;
       wrap.appendChild(btn);
     });
@@ -121,6 +125,7 @@
     var wrap = document.getElementById("signs");
     if (!wrap) return;
     wrap.innerHTML = "";
+    if (document.body.classList.contains("layout-m")) return;
     D.roles.forEach(function (r) {
       if (!r.sign) return;
       var list = Array.isArray(r.sign) ? r.sign : [r.sign];
@@ -188,8 +193,17 @@
       document.getElementById("dossierLabel").textContent = "franappi.com";
       return;
     }
-    btn.setAttribute("href", dl.file);
-    btn.classList.toggle("is-off", !dl.ready);
+    if (dl.ready) {
+      btn.setAttribute("href", dl.file);
+      btn.setAttribute("download", "");
+      btn.classList.remove("is-off");
+      btn.removeAttribute("aria-disabled");
+    } else {
+      btn.setAttribute("href", "#");
+      btn.removeAttribute("download");
+      btn.classList.add("is-off");
+      btn.setAttribute("aria-disabled", "true");
+    }
     document.getElementById("dossierLabel").textContent = ui().fullDossier;
   }
 
@@ -209,7 +223,7 @@
         '<span class="dlink__tag">' + esc(tagTxt) + "</span></span>";
     }
     return '<a class="dlink" href="' + esc(href) + '"' +
-      (isPdf ? " download" : ' target="_blank" rel="noopener"') + ">" +
+      (isPdf ? " download" : ' target="_blank" rel="noopener noreferrer"') + ">" +
       '<span class="dlink__glyph" aria-hidden="true">' + glyph + "</span>" +
       '<span class="dlink__label">' + esc(l.label) + "</span>" +
       '<span class="dlink__tag">' + esc(tagTxt) + "</span></a>";
