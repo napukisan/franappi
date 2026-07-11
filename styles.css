@@ -31,7 +31,7 @@ html, body { margin: 0; padding: 0; }
 body {
   font-family: var(--font-body);
   color: var(--ink);
-  background: #efe1c6;
+  background: #000;
 }
 body.has-modal { overflow: hidden; }
 
@@ -46,7 +46,7 @@ img { -webkit-user-drag: none; user-select: none; }
   min-height: 100svh;
   display: grid;
   place-items: center;
-  background: radial-gradient(120vmax 90vmax at 50% 38%, #f8efdd 0%, #efdfc0 55%, #e5d0aa 100%);
+  background: #000;
 }
 
 .stage {
@@ -85,29 +85,10 @@ img { -webkit-user-drag: none; user-select: none; }
 .lang {
   position: absolute;
   top: 4.28%; right: 10.5%;
-  display: flex; align-items: center; gap: 0.3cqw;
-  padding: 0.28cqw 0.55cqw;
-  background: linear-gradient(180deg, rgba(66, 55, 40, 0.88), rgba(38, 30, 20, 0.88));
-  border: 1px solid var(--copper-deep);
-  border-radius: 999px;
-  box-shadow: inset 0 1px 0 rgba(255, 220, 170, 0.25), 0 0.2cqw 0.5cqw rgba(30, 14, 2, 0.35);
+  display: block;
 }
-.lang__sep { color: rgba(240, 210, 160, 0.5); font-family: var(--font-cond); font-size: 0.85cqw; }
-.lang__btn {
-  appearance: none; border: 0; cursor: pointer;
-  background: transparent;
-  font-family: var(--font-cond);
-  font-weight: 700; font-size: 1.05cqw; letter-spacing: 0.1em;
-  color: rgba(240, 214, 165, 0.66);
-  padding: 0.12cqw 0.55cqw;
-  border-radius: 999px;
-}
-.lang__btn.is-on {
-  color: #2a1505;
-  background: linear-gradient(180deg, var(--copper-hi), #c07a40 60%, #9a5526);
-  box-shadow: inset 0 1px 0 rgba(255, 235, 200, 0.7), 0 1px 2px rgba(20, 8, 0, 0.4);
-}
-.lang__btn:focus-visible { outline: 0.25cqw solid var(--glow); outline-offset: 0.15cqw; }
+.lang__sep { display: none; }
+.lang__btn { display: none; }
 
 /* ===============================  HAMBURGER + MENU (base = desktop)
    Desktop: .hmenu è trasparente (display:contents) e lang + CV restano
@@ -117,7 +98,19 @@ img { -webkit-user-drag: none; user-select: none; }
 .hmenu { display: contents; }
 .rowheads { display: contents; }
 .rowhead { display: none; }
-.lang__toggle { display: none; }
+/* lingua: bottone-icona ITA/ENG (immagine impostata da script.js) */
+.lang__toggle {
+  display: block; width: 4.6cqw; aspect-ratio: 1.59; padding: 0;
+  border: 0; background: center / contain no-repeat;
+  background-image: url("assets/ui/btn-eng.png");
+  font-size: 0; color: transparent; cursor: pointer;
+  filter: drop-shadow(0 0.12cqw 0.2cqw rgba(20, 10, 2, 0.5));
+  transition: transform 0.15s ease;
+}
+.lang__toggle:hover { transform: scale(1.05); }
+.lang__toggle:focus-visible { outline: 0.25cqw solid var(--glow); outline-offset: 0.2cqw; }
+.role .role__img--m { display: none; }
+.m-robot { display: none; }
 
 /* ====================================================  TIER PLATES  */
 
@@ -259,22 +252,16 @@ img { -webkit-user-drag: none; user-select: none; }
   position: absolute;
   left: 9.9%; top: 6.63%;
   transform: translateY(-50%);
-  display: inline-flex; align-items: center; gap: 0.5cqw;
-  padding: 0.45cqw 1.3cqw 0.5cqw;
-  border-radius: 999px;
-  border: 0.1cqw solid #4c2810;
-  background: linear-gradient(180deg, #d29a5d, #a5643a 55%, #7c4520);
-  box-shadow: inset 0 0.14cqw 0.2cqw rgba(255, 225, 180, 0.55), inset 0 -0.24cqw 0.4cqw rgba(40, 16, 2, 0.4), 0 0.18cqw 0.45cqw rgba(30, 14, 2, 0.4);
-  font-family: var(--font-cond);
-  font-weight: 700; font-size: 1.08cqw; letter-spacing: 0.09em;
-  text-transform: uppercase; text-decoration: none;
-  color: #2a1505;
-  white-space: nowrap;
-  transition: filter 0.2s ease;
+  display: block;
+  width: 7.5cqw; aspect-ratio: 2.676;
+  background: url("assets/ui/btn-download.png") center / contain no-repeat;
+  filter: drop-shadow(0 0.12cqw 0.2cqw rgba(20, 10, 2, 0.5));
+  text-decoration: none;
+  transition: transform 0.2s ease, filter 0.2s ease;
 }
-.dossier-btn:hover { filter: brightness(1.1); color: #2a1505; }
+.dossier-btn:hover { transform: translateY(-50%) scale(1.04); filter: drop-shadow(0 0.12cqw 0.2cqw rgba(20, 10, 2, 0.5)) brightness(1.08); }
 .dossier-btn:focus-visible { outline: 0.25cqw solid var(--glow); outline-offset: 0.2cqw; }
-.dossier-btn__glyph { font-size: 0.75em; }
+.dossier-btn__glyph, .dossier-btn__label { display: none; }
 
 /* ========================================================  SOCIALS
    Monete coniate (PNG) nella targa inferiore vuota.                 */
@@ -339,18 +326,18 @@ img { -webkit-user-drag: none; user-select: none; }
    MOBILE / PORTRAIT — dashboard verticale (body.layout-m)
    ================================================================ */
 
-body.layout-m .scene { background: #171310; }
+body.layout-m .scene { background: #000; }
 
 body.layout-m .stage {
   width: 100vw;
-  aspect-ratio: 931 / 1689;
-  background-image: url("assets/backgrounds/dashboard-mobile-v3.png");
+  aspect-ratio: 941 / 1672;
+  background-image: url("assets/backgrounds/dashboard-mobile-v4.png");
 }
 
-/* nome dentro il banner in alto */
-body.layout-m .name-plate { left: 15%; top: 5.5%; width: 70%; height: 6%; }
+/* nome dentro il banner (più stretto) in alto */
+body.layout-m .name-plate { left: 24%; top: 6.4%; width: 52%; height: 6%; }
 body.layout-m .name {
-  font-size: 6.6cqw; letter-spacing: 0.06em;
+  font-size: 5cqw; letter-spacing: 0.04em;
   color: #2a1608;
   text-shadow: 0 0.14cqw 0 rgba(255, 240, 205, 0.55), 0 -0.05cqw 0.05cqw rgba(0, 0, 0, 0.25);
 }
@@ -359,12 +346,14 @@ body.layout-m .name {
 body.layout-m .signs { display: none; }
 
 /* --- intestazioni colonna PERFORM / CREATE / BUILD (nastro grigio in alto) --- */
-body.layout-m .col-head { top: 16.6%; font-size: 3.6cqw; letter-spacing: 0.12em; }
+body.layout-m .col-head { top: 17.1%; font-size: 3.95cqw; letter-spacing: 0.1em; color: #2a2318; }
+body.layout-m .col-head:nth-child(1) { left: 24.8%; }
+body.layout-m .col-head:nth-child(3) { left: 73.1%; }
 
 /* --- intestazioni riga: targhette verticali a sinistra (level 1/2/next) --- */
 body.layout-m .rowhead {
   display: grid; place-items: center;
-  position: absolute; left: 4.5%; width: 7%;
+  position: absolute; left: 7%; width: 7%;
   writing-mode: vertical-rl; transform: rotate(180deg);
   font-family: var(--font-cond); font-weight: 700;
   font-size: 2.5cqw; letter-spacing: 0.22em;
@@ -375,9 +364,9 @@ body.layout-m .rowhead {
   box-shadow: inset 0 0 0 0.15cqw rgba(255, 215, 160, 0.18), 0 0.4cqw 0.7cqw rgba(20, 10, 2, 0.45);
   text-shadow: 0 0.15cqw 0.2cqw rgba(0, 0, 0, 0.5);
 }
-body.layout-m .rowhead[data-r="play"]   { top: 21.5%; height: 17%; }
-body.layout-m .rowhead[data-r="evolve"] { top: 42%;   height: 17%; }
-body.layout-m .rowhead[data-r="unlock"] { top: 62.5%; height: 15%; }
+body.layout-m .rowhead[data-r="play"]   { top: 22.8%; height: 12%; }
+body.layout-m .rowhead[data-r="evolve"] { top: 43.3%; height: 10.7%; }
+body.layout-m .rowhead[data-r="unlock"] { top: 61.8%; height: 9.7%; }
 
 /* --- etichette ruolo sul bordo del pavimento (posizioni mobile --lmx/--lmy) --- */
 body.layout-m .labels { display: contents; }
@@ -392,32 +381,41 @@ body.layout-m .tierplate { display: none; }
 /* avatar */
 body.layout-m .role { left: var(--mcx); bottom: var(--mb); }
 body.layout-m .role__img { height: var(--mh); }
+/* avatar dedicato al mobile (es. vibe coder): mostra quello mobile e nasconde lo standard */
+body.layout-m .role__img--m { display: block; height: var(--mh); width: auto; }
+body.layout-m .role:has(.role__img--m) .role__img:not(.role__img--m) { display: none; }
 body.layout-m .role:focus-visible { outline-width: 0.7cqw; }
 
-/* --- LINGUA: toggle testuale che mostra la lingua attuale (ITA/ENG) --- */
+/* robottino AI decorativo in mobile */
+body.layout-m .m-robot {
+  display: block; position: absolute;
+  left: 68.8%; top: 52.2%; transform: translate(-50%, -50%);
+  width: 10.7cqw; height: auto;
+  filter: drop-shadow(0 0.5cqh 0.7cqh rgba(12, 10, 6, 0.5));
+  pointer-events: none;
+}
+
+/* --- LINGUA: bottone-icona ITA/ENG in basso a destra (mostra la lingua attuale) --- */
 body.layout-m .lang {
-  position: absolute; top: 2.6%; right: 3.5%; left: auto;
-  display: flex; align-items: center;
-  padding: 0; border: 0; background: none; box-shadow: none;
+  position: absolute; top: 90.5%; left: 80.3%; right: auto; transform: translate(-50%, -50%);
+  display: block; padding: 0; border: 0; background: none; box-shadow: none;
   z-index: 40;
 }
 body.layout-m .lang__btn, body.layout-m .lang__sep { display: none; }
 body.layout-m .lang__toggle {
-  display: inline-flex; align-items: center; justify-content: center;
-  min-width: 13cqw; padding: 1.5cqw 3cqw;
-  border-radius: 1.6cqw;
-  border: 0.32cqw solid var(--copper-deep);
-  background: linear-gradient(180deg, var(--copper-hi), #c07a40 60%, #9a5526);
-  box-shadow: inset 0 1px 0 rgba(255, 235, 200, 0.6), 0 0.4cqw 0.9cqw rgba(20, 10, 2, 0.45);
-  font-family: var(--font-cond); font-weight: 700;
-  font-size: 3.6cqw; letter-spacing: 0.12em;
-  color: #2a1505; text-transform: uppercase;
-  cursor: pointer;
+  display: block; width: 12cqw; aspect-ratio: 1.59; padding: 0;
+  border: 0; border-radius: 0; box-shadow: none;
+  background: center / contain no-repeat;
+  background-image: url("assets/ui/btn-eng.png");
+  font-size: 0; color: transparent; cursor: pointer;
+  filter: drop-shadow(0 0.4cqw 0.6cqw rgba(20, 10, 2, 0.5));
+  transition: transform 0.15s ease;
 }
-body.layout-m .lang__toggle:focus-visible { outline: 0.7cqw solid var(--glow); outline-offset: 0.3cqw; }
+body.layout-m .lang__toggle:hover { transform: scale(1.05); }
+body.layout-m .lang__toggle:focus-visible { outline: 0.7cqw solid var(--glow); outline-offset: 0.4cqw; }
 
 /* --- FOOTER INFERIORE: monete ravvicinate · CV a sinistra · payoff a destra --- */
-body.layout-m .social { --w: 16%; --cy: 87%; }
+body.layout-m .social { --w: 16%; --cy: 80.5%; }
 body.layout-m .social[data-soc="linkedin"]  { --cx: 25.25%; }
 body.layout-m .social[data-soc="github"]    { --cx: 41.75%; }
 body.layout-m .social[data-soc="whatsapp"]  { --cx: 58.25%; }
@@ -426,18 +424,25 @@ body.layout-m .social__ring { border-width: 0.4cqw; }
 
 /* "click on avatars" rimosso; il bottone CV prende il suo posto (in basso a sinistra) */
 body.layout-m .bar-mail { display: none; }
+/* --- CV: bottone-icona download in basso a sinistra --- */
 body.layout-m .dossier-btn {
-  display: inline-flex; position: absolute;
-  left: 6%; right: auto; top: 95.4%; transform: translateY(-50%);
-  padding: 1.3cqw 2.8cqw; font-size: 3cqw; gap: 1.1cqw; border-width: 0.3cqw;
+  display: block; position: absolute;
+  left: 22.8%; right: auto; top: 90.7%; transform: translate(-50%, -50%);
+  width: 15.5cqw; aspect-ratio: 2.676; padding: 0;
+  border: 0; border-radius: 0; box-shadow: none;
+  background: url("assets/ui/btn-download.png") center / contain no-repeat;
+  filter: drop-shadow(0 0.4cqw 0.6cqw rgba(20, 10, 2, 0.5));
+  transition: transform 0.15s ease;
 }
-body.layout-m .dossier-btn__label { display: none; }
-body.layout-m .dossier-btn::after {
-  content: "PDF"; font-family: var(--font-cond); font-weight: 700; letter-spacing: 0.08em;
+body.layout-m .dossier-btn:hover {
+  transform: translate(-50%, -50%) scale(1.05);
+  filter: drop-shadow(0 0.4cqw 0.6cqw rgba(20, 10, 2, 0.5)) brightness(1.08);
 }
+body.layout-m .dossier-btn__glyph, body.layout-m .dossier-btn__label { display: none; }
+body.layout-m .dossier-btn::after { content: none; }
 body.layout-m .payoff {
-  display: block; right: 13%; left: auto; top: 95.4%; transform: translateY(-50%);
-  text-align: right; font-size: 4.86cqw;
+  display: block; left: 52.6%; right: auto; top: 90.8%; transform: translate(-50%, -50%);
+  text-align: center; font-size: 4.3cqw;
 }
 
 /* ================================================================

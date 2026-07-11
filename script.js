@@ -59,8 +59,12 @@
       btn.style.cssText =
         "--dcx:" + r.d.cx + "%;--db:" + r.d.bottom + "%;--dh:" + r.d.h + "cqh;" +
         "--mcx:" + r.m.cx + "%;--mb:" + r.m.bottom + "%;--mh:" + r.m.h + "cqh;";
-      btn.innerHTML =
+      var imgs =
         '<img class="role__img" src="' + esc(r.avatar) + '" alt="" draggable="false" />';
+      if (r.mAvatar) {
+        imgs += '<img class="role__img role__img--m" src="' + esc(r.mAvatar) + '" alt="" draggable="false" />';
+      }
+      btn.innerHTML = imgs;
       wrap.appendChild(btn);
     });
     renderLabels();
@@ -280,7 +284,10 @@
     document.getElementById("langIt").setAttribute("aria-pressed", lang === "it" ? "true" : "false");
     document.getElementById("langEn").setAttribute("aria-pressed", lang === "en" ? "true" : "false");
     var lt = document.getElementById("langToggle");
-    if (lt) lt.textContent = lang === "it" ? "ITA" : "ENG";
+    if (lt) {
+      lt.textContent = lang === "it" ? "ENG" : "ITA";
+      lt.style.backgroundImage = 'url("assets/ui/btn-' + (lang === "it" ? "eng" : "ita") + '.png")';
+    }
     renderRoles();
     applyLinks();
     if (openId) openDossier(openId, true);   /* stesso ruolo, testi nuovi */
