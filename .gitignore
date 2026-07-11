@@ -3,7 +3,18 @@
 
 # Materiali di lavoro/importati e file esportati localmente
 /uploads/
-/downloads/
+/downloads/*
+!/downloads/Francesco Nappi - Actor & Speaker -ENG.pdf
+!/downloads/Francesco Nappi - Actor & Speaker -ITA.pdf
+!/downloads/Francesco Nappi - Creative & Copywriter -ENG.pdf
+!/downloads/Francesco Nappi - Creative & Copywriter -ITA.pdf
+!/downloads/Android Basics Nanodegree by Google.png
+!/downloads/Francesco Nappi - Trainer & Coach -ENG.pdf
+!/downloads/Francesco Nappi - Trainer & Coach -ITA.pdf
+!/downloads/Sami Around The World - Scheda Progetto.pdf
+!/downloads/ESCP - From zero to Startup.jfif
+!/downloads/Francesco Nappi - Interactive CV -ITA.pdf
+!/downloads/Francesco Nappi - Interactive CV -ENG.pdf
 
 # Dipendenze e build (se il progetto verrà esteso)
 node_modules/

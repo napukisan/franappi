@@ -28,8 +28,8 @@ window.LIAG = {
     email: "franappi@gmail.com",
     links: {
       linkedin: "https://www.linkedin.com/in/franappi",
-      github:   "",                                   /* TODO: aggiungi URL GitHub */
-      whatsapp: "",                                   /* TODO: aggiungi link/numero WhatsApp */
+      github:   "https://github.com/napukisan",
+      whatsapp: "https://wa.me/393331825543",
       mail:     "mailto:franappi@gmail.com",
       /* non più nel footer (sostituiti da GitHub/WhatsApp/Email): tenuti per uso futuro */
       facebook: "https://www.facebook.com/franappi",
@@ -39,7 +39,14 @@ window.LIAG = {
 
   /* ---- PDF scaricabili (ready:false = bottone "in preparazione") ---- */
   downloads: {
-    actor:     { file: "downloads/francesco-nappi-actor-speaker.pdf",      ready: false },
+    actorIt:   { file: "downloads/Francesco Nappi - Actor & Speaker -ITA.pdf", ready: true  },
+    actorEn:   { file: "downloads/Francesco Nappi - Actor & Speaker -ENG.pdf", ready: true  },
+    copyIt:    { file: "downloads/Francesco Nappi - Creative & Copywriter -ITA.pdf", ready: true  },
+    copyEn:    { file: "downloads/Francesco Nappi - Creative & Copywriter -ENG.pdf", ready: true  },
+    trainerIt: { file: "downloads/Francesco Nappi - Trainer & Coach -ITA.pdf", ready: true },
+    trainerEn: { file: "downloads/Francesco Nappi - Trainer & Coach -ENG.pdf", ready: true },
+    samiProject: { file: "downloads/Sami Around The World - Scheda Progetto.pdf", ready: true },
+    founderEscp: { file: "downloads/ESCP - From zero to Startup.jfif", ready: true },
     copy:      { file: "downloads/francesco-nappi-creative-copywriter.pdf",ready: false },
     trainer:   { file: "downloads/francesco-nappi-trainer-coach.pdf",      ready: false },
     creative:  { file: "downloads/francesco-nappi-creative-projects.pdf",  ready: false },
@@ -88,7 +95,7 @@ window.LIAG = {
         { img: "assets/skills/robot-ai.png",  cx: 76.6, cy: 56.1, w: 4.4 }
       ] },
     { id: "founder",            tier: "unlock", n: 7, avatar: "assets/avatars/founder.png",
-      d: { cx: 48.0, bottom: 15.0, h: 19.0 }, m: { cx: 48.2, bottom: 26.3, h: 13.5 },
+      d: { cx: 48.0, bottom: 16.5, h: 18.0 }, m: { cx: 48.2, bottom: 27.65, h: 12.75 },
       label: null, sign: null }
   ],
 
@@ -146,15 +153,16 @@ window.LIAG = {
         challenges: [
           "Formazione in **Storytelling & Performing Arts alla Scuola Holden**, con percorso di acting con Gabriele Vacis.",
           "Esperienze in teatro, cinema, cortometraggi, spot, radio e opera lirica.",
-          "Autore e speaker di **\"The Turiner\"** per Radio MBun; autore di **\"(S)Talkin' to me?\"**, finalista al Premio Riccione Pier Vittorio Tondelli 2013."
+          "Autore e speaker di **\"The Turiner\"** per Radio MBun;",
+          "Autore di **\"(S)Talkin' to me?\"**, finalista al Premio Riccione Pier Vittorio Tondelli 2013."
         ],
         skills: ["**Public speaking**", "**Presenza scenica**", "**Voce e ritmo**", "**Scrittura performativa**", "**Gestione dell'attenzione**", "**Drammaturgia**"],
         links: [
-          { label: "CV Actor & Speaker", kind: "pdf", dl: "actor" },
-          { label: "Showreel / video selezionati", kind: "video", href: "", ready: false }
+          { label: "CV Attore & Speaker", kind: "pdf", dl: "actorIt" },
+          { label: "Showreel / video selezionati", kind: "video", href: "https://www.youtube.com/watch?v=BMj9e3N5IOQ", ready: true }
         ],
         image: "assets/popup-images/actor-speaker.jpg",
-        imageNote: "Foto di scena, still da teatro/cinema, radio o immagine microfono/palco"
+        imageNote: ""
       },
 
       "copywriter": {
@@ -163,14 +171,15 @@ window.LIAG = {
         challenges: [
           "Copy e transcreation per clienti internazionali tramite **Copywriter Collective**, tra cui Google, Manfrotto, Amazon e Coin Excelsior.",
           "Testi, payoff e manifesti per **This Is Ideal** e altri progetti di brand communication.",
-          "Direzione del gruppo copy per i testi del programma Matera 2019 Capitale Europea della Cultura; collaborazioni con **Eggers 2.0**, Weevo e Scuola Holden."
+          "Direzione del gruppo copy per i testi del programma **MATERA 2019 CAPITALE EUROPEA DELLA CULTURA**;",
+          "Collaborazioni con **Eggers 2.0**, Weevo e Scuola Holden."
         ],
         skills: ["**Copywriting**", "**Transcreation**", "**Brand voice**", "**Manifesto writing**", "**Content strategy**", "**Struttura editoriale**", "**Naming e payoff**"],
         links: [
-          { label: "CV Creative & Copywriter", kind: "pdf", dl: "copy" }
+          { label: "CV Creative & Copywriter", kind: "pdf", dl: "copyIt" }
         ],
-        image: "assets/popup-images/copywriter.jpg",
-        imageNote: "Screenshot di testi, loghi clienti, pagina catalogo, manifesto o griglia di progetti"
+        image: "assets/popup-images/copywriter.png",
+        imageNote: ""
       },
 
       "tech-addicted": {
@@ -183,25 +192,24 @@ window.LIAG = {
         ],
         skills: ["**Coding**", "**Gamification**", "**Ux design**", "**Android/Java basics**"],
         links: [
-          { label: "Toolbox interna al popup", kind: "web", href: "", ready: false },
-          { label: "Eventuali certificati/corsi", kind: "web", href: "", ready: false }
+          { label: "Android Basics Nanodegree by Google", kind: "web", href: "downloads/Android Basics Nanodegree by Google.png", ready: true }
         ],
-        image: "assets/popup-images/tech-addicted.jpg",
-        imageNote: "Griglia di badge/tool: Google Udacity, Game Design, GitHub, OBS, Figma, Adobe, AI tools"
+        image: "assets/popup-images/tech-addicted.gif",
+        imageNote: ""
       },
 
       "trainer-coach": {
         name: "Trainer & Coach",
         role: "Dopo il diploma alla Scuola Holden, ho progettato e condotto percorsi su storytelling, comunicazione e public speaking, oltre a insegnamenti sperimentali come \"Instabilità\" e \"Plotting\". Per me insegnare significa disegnare esperienze memorabili, capaci di trasmettere informazioni ed emozioni.",
         challenges: [
-          "Docente per Scuola Holden in Storytelling & Comunicazione per professionisti e aziende.",
-          "Instructional designer con Alessandro Baricco per i corsi di \"Plotting\" e \"Instabilità\" di Scuola Holden.",
-          "Digital & Learning Strategist per Chora Academy di Chora Media.",
+          "Docente per **Scuola Holden** in Storytelling & Comunicazione per professionisti e aziende.",
+          "Instructional designer con **Alessandro Baricco** per i corsi di \"Plotting\" e \"Instabilità\" di Scuola Holden.",
+          "Digital & Learning Strategist per Chora Academy di **Chora Media**.",
           "Coaching di comunicazione e public speaking per professionisti, team e aziende."
         ],
         skills: ["**Storytelling**", "**Public speaking**", "**Instructional design**", "**Comunicazione efficace**", "**Pensiero Laterale**"],
         links: [
-          { label: "CV Trainer & Coach", kind: "pdf", dl: "trainer" }
+          { label: "CV Trainer & Coach", kind: "pdf", dl: "trainerIt" }
         ],
         image: "assets/popup-images/trainer-coach.jpg",
         imageNote: "Foto aula/workshop, lavagna Storytelling Communication Public Speaking, slide o contesto formativo"
@@ -211,13 +219,15 @@ window.LIAG = {
         name: "Freelance Creative",
         role: "**Come creativo lavoro tra concept, narrazione, produzione e project management, soprattutto su progetti che non appartengono a una sola categoria. Individuo il loro universo narrativo e lo trasformo in identità, format ed esperienze capaci di coinvolgere ed emozionare.**",
         challenges: [
-          "**Sami Around The World** — ideazione, direzione creativa, project management, comunicazione, raccolta fondi, sponsor, sito, social e format video.",
+          "**Sami Around The World** — ideazione, direzione creativa, project management, comunicazione, raccolta fondi, sponsor, sito, social e format video. Un progetto di viaggio di tre amici per abbattere limiti e barriere fisici e mentali all'insegna del Paradventuring, terminato con la fiaccola olimpica di **Milano Cortina 2026**.",
           "**Scuola Verna** — posizionamento, manifesto, identità narrativa e concept del sito immersivo.",
           "Progetti di brand storytelling, format e comunicazione integrata per aziende, scuole e realtà culturali."
         ],
         skills: ["**Creative direction**", "**Project design**", "**Narrative strategy**", "**Brand storytelling**", "**Format development**", "**Fundraising**"],
         links: [
-          { label: "Sami Around The World", kind: "web", href: "", ready: false }
+          { label: "Sami Around The World – Slideshow finale", kind: "video", href: "https://www.youtube.com/watch?v=I7uEfQPBzQI", ready: true },
+          { label: "Sami Around The World – Scheda Progetto", kind: "pdf", dl: "samiProject" },
+          { label: "Sami Around The World – Il racconto", kind: "video", href: "https://www.youtube.com/watch?v=ok-uibfgJqI&t=1s", ready: true }
         ],
         image: "assets/popup-images/freelance-creative.jpg",
         imageNote: "Immagine Sami Around The World, screenshot Scuola Verna, moodboard o collage progetti"
@@ -235,9 +245,9 @@ window.LIAG = {
         links: [
           { label: "GitHub – Background Removal", kind: "web", href: "", ready: false },
           { label: "giuliafilippone.com", kind: "web", href: "https://giuliafilippone.com", ready: true },
-          { label: "franappi.com", kind: "web", href: "", ready: false }
+          
         ],
-        image: "assets/popup-images/vibe-coder.jpg",
+        image: "assets/popup-images/vibe-coder.png",
         imageNote: "Screenshot Virtòó, GitHub, OBS plugin, codice/interfaccia, sito giuliafilippone.com o dashboard CV"
       },
 
@@ -251,7 +261,9 @@ window.LIAG = {
         ],
         skills: ["**Product vision**", "**Business model design**", "**Pitching**", "**Go-to-market**", "**Market validation**", "**Creative entrepreneurship**"],
         links: [
-          { label: "Virtòó - spot", kind: "video", href: "", ready: false }
+          { label: "Virtòó – Demo", kind: "video", href: "https://youtu.be/YYjLBOxgwNY", ready: true },
+          { label: "Virtòó – Spot", kind: "video", href: "https://youtu.be/ICgZiA20YP8?si=psfSJ0y4LdeICYTX", ready: true },
+          { label: "ESCP – From zero to Startup", kind: "web", href: "downloads/ESCP - From zero to Startup.jfif", ready: true }
         ],
         image: "assets/popup-images/founder.jpg",
         imageNote: "Mockup Virtòó, screenshot prodotto, immagine pitch/deck, logo o visual startup"
@@ -267,15 +279,16 @@ window.LIAG = {
         challenges: [
           "Training in **Storytelling & Performing Arts at Scuola Holden**, including acting training with Gabriele Vacis.",
           "Experience in theatre, film, short films, commercials, radio and opera.",
-          "Writer and host of **\"The Turiner\"** for Radio MBun; writer of **\"(S)Talkin' to me?\"**, finalist for the 2013 Premio Riccione Pier Vittorio Tondelli."
+          "Writer and host of **\"The Turiner\"** for Radio MBun;",
+          "Writer of **\"(S)Talkin' to me?\"**, finalist for the 2013 Premio Riccione Pier Vittorio Tondelli."
         ],
         skills: ["**Public speaking**", "**Stage presence**", "**Voice and rhythm**", "**Performance writing**", "**Attention management**", "**Dramaturgy**"],
         links: [
-          { label: "CV Actor & Speaker", kind: "pdf", dl: "actor" },
-          { label: "Showreel / selected videos", kind: "video", href: "", ready: false }
+          { label: "CV Actor & Speaker", kind: "pdf", dl: "actorEn" },
+          { label: "Showreel / selected videos", kind: "video", href: "https://www.youtube.com/watch?v=BMj9e3N5IOQ", ready: true }
         ],
         image: "assets/popup-images/actor-speaker.jpg",
-        imageNote: "Stage photos, stills from theatre/cinema, radio or a microphone/stage image"
+        imageNote: ""
       },
 
       "copywriter": {
@@ -284,15 +297,15 @@ window.LIAG = {
         challenges: [
           "Copywriting and transcreation for international clients through **Copywriter Collective**, including Google, Manfrotto, Amazon and Coin Excelsior.",
           "Copy, taglines and manifestos for **This Is Ideal** and other brand communication projects.",
-          "Led the copy team for the Matera 2019 European Capital of Culture programme; collaborations with **Eggers 2.0**, Weevo and Scuola Holden."
+          "Led the copy team for the **MATERA 2019 EUROPEAN CAPITAL OF CULTURE** programme;",
+          "Collaborations with **Eggers 2.0**, Weevo and Scuola Holden."
         ],
         skills: ["**Copywriting**", "**Transcreation**", "**Brand voice**", "**Manifesto writing**", "**Content strategy**", "**Editorial structure**", "**Naming and taglines**"],
         links: [
-          { label: "CV Creative & Copywriter", kind: "pdf", dl: "copy" },
-          { label: "CV Creative & Copywriter", kind: "pdf", dl: "copy" }
+          { label: "CV Creative & Copywriter", kind: "pdf", dl: "copyEn" }
         ],
-        image: "assets/popup-images/copywriter.jpg",
-        imageNote: "Screenshots of copy, client logos, a catalogue page, manifesto or project grid"
+        image: "assets/popup-images/copywriter.png",
+        imageNote: ""
       },
 
       "tech-addicted": {
@@ -305,11 +318,10 @@ window.LIAG = {
         ],
         skills: ["**Coding**", "**Gamification**", "**UX design**", "**Android/Java basics**"],
         links: [
-          { label: "In-popup toolbox", kind: "web", href: "", ready: false },
-          { label: "Any certificates/courses", kind: "web", href: "", ready: false }
+          { label: "Android Basics Nanodegree by Google", kind: "web", href: "downloads/Android Basics Nanodegree by Google.png", ready: true }
         ],
-        image: "assets/popup-images/tech-addicted.jpg",
-        imageNote: "Badge/tool grid: Google Udacity, Game Design, GitHub, OBS, Figma, Adobe, AI tools"
+        image: "assets/popup-images/tech-addicted.gif",
+        imageNote: ""
       },
 
       "trainer-coach": {
@@ -323,7 +335,7 @@ window.LIAG = {
         ],
         skills: ["**Storytelling**", "**Public speaking**", "**Instructional design**", "**Effective communication**", "**Lateral thinking**"],
         links: [
-          { label: "CV Trainer & Coach", kind: "pdf", dl: "trainer" }
+          { label: "CV Trainer & Coach", kind: "pdf", dl: "trainerEn" }
         ],
         image: "assets/popup-images/trainer-coach.jpg",
         imageNote: "Photo from a classroom/workshop, Storytelling Communication Public Speaking board, slide or training setting"
@@ -333,13 +345,15 @@ window.LIAG = {
         name: "Freelance Creative",
         role: "**As a creative, I work across concept development, storytelling, production and project management, especially on projects that do not fit into a single category. I identify their narrative universe and turn it into identities, formats and experiences capable of engaging and moving people.**",
         challenges: [
-          "**Sami Around The World** — concept, creative direction, project management, communication, fundraising, sponsors, website, social media and video formats.",
+          "**Sami Around The World** — concept, creative direction, project management, communication, fundraising, sponsors, website, social media and video formats. A journey by three friends to break physical and mental limits through Paradventuring, ending with the Olympic torch of **Milano Cortina 2026**.",
           "**Scuola Verna** — positioning, manifesto, narrative identity and immersive website concept.",
           "Brand storytelling, formats and integrated communication for companies, schools and cultural organisations."
         ],
         skills: ["**Creative direction**", "**Project design**", "**Narrative strategy**", "**Brand storytelling**", "**Format development**", "**Fundraising**"],
         links: [
-          { label: "Sami Around The World", kind: "web", href: "", ready: false },
+          { label: "Sami Around The World – Final slideshow", kind: "video", href: "https://www.youtube.com/watch?v=I7uEfQPBzQI", ready: true },
+          { label: "Sami Around The World – Project sheet", kind: "pdf", dl: "samiProject" },
+          { label: "Sami Around The World – The story", kind: "video", href: "https://www.youtube.com/watch?v=ok-uibfgJqI&t=1s", ready: true }
         ],
         image: "assets/popup-images/freelance-creative.jpg",
         imageNote: "Sami Around The World image, Scuola Verna screenshot, moodboard or project collage"
@@ -357,9 +371,9 @@ window.LIAG = {
         links: [
           { label: "GitHub – Background Removal", kind: "web", href: "", ready: false },
           { label: "giuliafilippone.com", kind: "web", href: "https://giuliafilippone.com", ready: true },
-          { label: "franappi.com", kind: "web", href: "", ready: false }
+          
         ],
-        image: "assets/popup-images/vibe-coder.jpg",
+        image: "assets/popup-images/vibe-coder.png",
         imageNote: "Virtòó screenshot, GitHub, OBS plugin, code/interface, giuliafilippone.com website or CV dashboard"
       },
 
@@ -373,7 +387,9 @@ window.LIAG = {
         ],
         skills: ["**Product vision**", "**Business model design**", "**Pitching**", "**Go-to-market**", "**Market validation**", "**Creative entrepreneurship**"],
         links: [
-          { label: "Virtòó - commercial", kind: "video", href: "", ready: false }
+          { label: "Virtòó – Demo", kind: "video", href: "https://youtu.be/YYjLBOxgwNY", ready: true },
+          { label: "Virtòó – Spot", kind: "video", href: "https://youtu.be/ICgZiA20YP8?si=psfSJ0y4LdeICYTX", ready: true },
+          { label: "ESCP – From zero to Startup", kind: "web", href: "downloads/ESCP - From zero to Startup.jfif", ready: true }
         ],
         image: "assets/popup-images/founder.jpg",
         imageNote: "Virtòó mockup, product screenshot, pitch/deck image, logo or startup visual"

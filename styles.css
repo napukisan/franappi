@@ -262,6 +262,15 @@ img { -webkit-user-drag: none; user-select: none; }
 .dossier-btn:hover { transform: translateY(-50%) scale(1.04); filter: drop-shadow(0 0.12cqw 0.2cqw rgba(20, 10, 2, 0.5)) brightness(1.08); }
 .dossier-btn:focus-visible { outline: 0.25cqw solid var(--glow); outline-offset: 0.2cqw; }
 .dossier-btn__glyph, .dossier-btn__label { display: none; }
+body.pdf-mode .dossier-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: auto; min-width: 9.5cqw; height: auto; aspect-ratio: auto;
+  padding: 0.45cqw 1.3cqw; background: linear-gradient(180deg, #d29a5d, #a5643a 55%, #7c4520);
+  border: 0.1cqw solid #4c2810; border-radius: 999px; filter: none;
+  color: #2a1505; font-family: var(--font-cond); font-weight: 700;
+  font-size: 1.08cqw; letter-spacing: 0.09em;
+}
+body.pdf-mode .dossier-btn__label { display: block; }
 
 /* ========================================================  SOCIALS
    Monete coniate (PNG) nella targa inferiore vuota.                 */
@@ -534,6 +543,7 @@ body.layout-m .payoff {
 .dossier__close:focus-visible { outline: 3px solid var(--glow); outline-offset: 2px; }
 
 .dossier__body {
+  position: relative;
   overflow: auto;
   overscroll-behavior: contain;
   padding: 24px 26px 28px;
@@ -611,6 +621,15 @@ body.layout-m .payoff {
   overflow: hidden;
 }
 .dimage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dimage__img { cursor: zoom-in; }
+.dimage__img[src$=".gif"] { object-fit: contain; background: #000; }
+.dimage__img[src*="trainer-coach"] { object-fit: contain; background: #000; }
+.dimage.is-zoomed {
+  position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; margin: 0;
+  aspect-ratio: auto; background: #111;
+}
+.dimage.is-zoomed .dimage__img { object-fit: contain; cursor: zoom-out; }
+.dimage__video { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .dimage.is-empty img { display: none; }
 .dimage.is-empty::before {
   content: "▦";
@@ -688,6 +707,14 @@ body.layout-m .payoff {
   .dossier__body { grid-template-columns: 1fr; padding: 18px 16px 22px; gap: 0 0; }
   .dsec__lead { font-size: 15.5px; }
   .challenges li { font-size: 14.5px; }
+}
+
+/* PDF interattivo: formato orizzontale per replicare la dashboard */
+@media print {
+  @page { size: landscape; margin: 0; }
+  html, body { width: 100%; height: 100%; }
+  body.pdf-mode { background: #000; }
+  body.pdf-mode .scene { min-height: 100vh; }
 }
 
 /* ================================================================ */

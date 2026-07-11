@@ -22,7 +22,16 @@
   applyLayout();
 
   var LS_KEY = "liag-lang";
+  var QUERY_LANG = null;
+  var PDF_MODE = false;
+  try {
+    var query = new URLSearchParams(location.search);
+    QUERY_LANG = query.get("lang");
+    PDF_MODE = query.get("pdf") === "1";
+  } catch (e) {}
+  if (PDF_MODE) document.body.classList.add("pdf-mode");
   var lang = (function () {
+    if (QUERY_LANG === "it" || QUERY_LANG === "en") return QUERY_LANG;
     try { var s = localStorage.getItem(LS_KEY); if (s === "it" || s === "en") return s; } catch (e) {}
     return D.defaultLang || "it";
   })();
@@ -39,6 +48,17 @@
   }
   function rich(s) {
     return esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  }
+  function plain(s) {
+    return esc(String(s == null ? "" : s).replace(/\*\*/g, ""));
+  }
+  function dossierMedia(c) {
+    if (c.media && c.media.type === "youtube") {
+      return '<iframe class="dimage__video" src="' + esc(c.media.src) +
+        '" title="' + esc(c.media.title || c.name) +
+        '" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>';
+    }
+    return '<img class="dimage__img" src="' + esc(c.image) + '" alt="' + esc(c.name) + '" tabindex="0" role="button" aria-label="Ingrandisci immagine" onerror="this.closest(\'.dimage\').classList.add(\'is-empty\')" />';
   }
   function ui() { return D.ui[lang]; }
   function roleContent(id) { return (D.content[lang] || {})[id]; }
@@ -161,6 +181,13 @@
     });
     var dl = D.downloads.complete;
     var btn = document.getElementById("dossierBtn");
+    if (PDF_MODE) {
+      btn.href = "https://franappi.com";
+      btn.removeAttribute("download");
+      btn.classList.remove("is-off");
+      document.getElementById("dossierLabel").textContent = "franappi.com";
+      return;
+    }
     btn.setAttribute("href", dl.file);
     btn.classList.toggle("is-off", !dl.ready);
     document.getElementById("dossierLabel").textContent = ui().fullDossier;
@@ -194,7 +221,7 @@
     return (
       '<div class="dossier__col dossier__col--txt">' +
         '<section class="dsec"><h3 class="dsec__h">Role</h3>' +
-          '<p class="dsec__lead">' + rich(c.role) + "</p></section>" +
+          '<p class="dsec__lead">' + plain(c.role) + "</p></section>" +
         '<section class="dsec"><h3 class="dsec__h">Main Challenges</h3>' +
           '<ul class="challenges">' +
             c.challenges.map(function (x) { return "<li>" + rich(x) + "</li>"; }).join("") +
@@ -206,8 +233,7 @@
       "</div>" +
       '<div class="dossier__col dossier__col--side">' +
         '<figure class="dimage" id="dImage">' +
-          '<img src="' + esc(c.image) + '" alt="' + esc(c.name) + '" onerror="this.closest(\'.dimage\').classList.add(\'is-empty\')" />' +
-          '<figcaption class="dimage__note"><span aria-hidden="true">▦ </span>' + esc(c.imageNote) + "</figcaption>" +
+          dossierMedia(c) +
         "</figure>" +
         (links ? '<section class="dsec"><h3 class="dsec__h">Download &amp; Links</h3>' +
           '<div class="dlinks">' + links + "</div></section>" : "") +
@@ -228,6 +254,19 @@
     document.getElementById("dFile").textContent = "FILE " + meta.n + "/7";
     document.getElementById("dClose").setAttribute("aria-label", ui().close);
     document.getElementById("dBody").innerHTML = buildDossier(id);
+    var zoomImg = document.querySelector("#dImage .dimage__img");
+    if (zoomImg) {
+      zoomImg.addEventListener("click", function (e) {
+        e.stopPropagation();
+        this.closest(".dimage").classList.toggle("is-zoomed");
+      });
+      zoomImg.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          this.closest(".dimage").classList.toggle("is-zoomed");
+        }
+      });
+    }
 
     var modal = document.getElementById("modal");
     if (closeTimer) { window.clearTimeout(closeTimer); closeTimer = null; }
@@ -298,6 +337,8 @@
 
   /* ------------------------------------------------ eventi -------- */
   document.addEventListener("click", function (e) {
+    var image = e.target.closest(".dimage__img");
+    if (image) { image.closest(".dimage").classList.toggle("is-zoomed"); return; }
     var r = e.target.closest("[data-role]");
     if (r) { e.preventDefault(); openDossier(r.getAttribute("data-role")); return; }
     if (e.target.closest("[data-close]")) { closeDossier(); return; }
@@ -306,7 +347,13 @@
   });
 
   document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") { closeDossier(); return; }
+    var image = e.target.closest && e.target.closest(".dimage__img");
+    if (image && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); image.closest(".dimage").classList.toggle("is-zoomed"); return; }
+    if (e.key === "Escape") {
+      var zoomed = document.querySelector(".dimage.is-zoomed");
+      if (zoomed) { zoomed.classList.remove("is-zoomed"); return; }
+      closeDossier(); return;
+    }
     /* mini focus-trap dentro il dialog */
     if (e.key === "Tab" && openId) {
       var panel = document.querySelector(".dossier");
