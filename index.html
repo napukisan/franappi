@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Francesco Nappi — Life Is A Game</title>
+  <meta name="description" content="Francesco Nappi — CV creativo interattivo. Life Is A Game: sette ruoli, un percorso." />
+
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+
+  <!-- Fonts: Saira (display) · Saira Condensed (labels) · Zilla Slab (body) · Satisfy (payoff) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Saira:wght@500;600;700;800&family=Saira+Condensed:wght@500;600;700&family=Zilla+Slab:ital,wght@0,400;0,500;0,600;1,400&family=Satisfy&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <div class="scene">
+    <main class="stage" id="stage" data-screen-label="Vault Dashboard" aria-label="Life Is A Game — dashboard">
+
+      <!-- HEADER · nome (layer HTML sul pannello superiore) -->
+      <header class="name-plate">
+        <h1 class="name" id="name">FRANCESCO NAPPI</h1>
+      </header>
+
+      <!-- MENU wrapper (display:contents): lang + CV mantengono le proprie posizioni -->
+      <div class="hmenu" id="hmenu">
+        <!-- LANGUAGE SWITCH -->
+        <div class="lang" role="group" aria-label="Language">
+          <button class="lang__btn" id="langIt" type="button" lang="it" aria-label="Italiano">IT</button>
+          <span class="lang__sep" aria-hidden="true">/</span>
+          <button class="lang__btn" id="langEn" type="button" lang="en" aria-label="English">EN</button>
+          <button class="lang__toggle" id="langToggle" type="button" aria-label="Cambia lingua">ITA</button>
+        </div>
+        <!-- CV -->
+        <a class="dossier-btn" id="dossierBtn" href="downloads/francesco-nappi-complete-cv.pdf" download>
+          <span class="dossier-btn__glyph" aria-hidden="true">▼</span>
+          <span class="dossier-btn__label" id="dossierLabel">CV completo (PDF)</span>
+        </a>
+      </div>
+
+      <!-- TIER PLATES (solo desktop, targhette a sinistra) -->
+      <div class="tiers" aria-hidden="true">
+        <span class="tierplate" data-tier="play">LEVEL 1 &gt;2016</span>
+        <span class="tierplate" data-tier="evolve">LEVEL 2 &gt;TODAY</span>
+        <span class="tierplate" data-tier="unlock">NEXT LEVEL</span>
+      </div>
+
+      <!-- ROW HEADERS (solo mobile: targhette verticali a sinistra) -->
+      <div class="rowheads" aria-hidden="true">
+        <span class="rowhead" data-r="play">LEVEL 1</span>
+        <span class="rowhead" data-r="evolve">LEVEL 2</span>
+        <span class="rowhead" data-r="unlock">NEXT</span>
+      </div>
+
+      <!-- COLUMN HEADERS (PERFORM / CREATE / BUILD, incisi sul metallo) -->
+      <div class="cols" id="cols" aria-hidden="true"></div>
+
+      <!-- SKILL SIGNS (insegne cliccabili, generate su coordinate di data.js) -->
+      <div class="signs" id="signs"></div>
+
+      <!-- ROLE LABELS (targhette sul bordo del pavimento) -->
+      <div class="labels" id="labels"></div>
+
+      <!-- RUOLI (7 hotspot generati da script.js su coordinate di data.js) -->
+      <nav class="roles" id="roles" aria-label="Ruoli"></nav>
+
+      <!-- FOOTER · hotspot sui bottoni social dipinti nella dashboard -->
+      <nav class="socials" aria-label="Contatti e social">
+        <a class="social" id="socLinkedin" data-soc="linkedin" target="_blank" rel="noopener" aria-label="LinkedIn"><img class="social__icon" src="assets/social/linkedin.png" alt="" draggable="false" /><span class="social__ring" aria-hidden="true"></span></a>
+        <a class="social" id="socGithub" data-soc="github" target="_blank" rel="noopener" aria-label="GitHub"><img class="social__icon" src="assets/social/github.png" alt="" draggable="false" /><span class="social__ring" aria-hidden="true"></span></a>
+        <a class="social" id="socWhatsapp" data-soc="whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp"><img class="social__icon" src="assets/social/whatsapp.png" alt="" draggable="false" /><span class="social__ring" aria-hidden="true"></span></a>
+        <a class="social" id="socEmail" data-soc="email" aria-label="Email"><img class="social__icon" src="assets/social/email.png" alt="" draggable="false" /><span class="social__ring" aria-hidden="true"></span></a>
+      </nav>
+
+      <!-- BOTTOM BAR · mail/payoff (il CV è ora nel menu hamburger) -->
+      <p class="bar-mail" id="barMail">CLICK ON AVATARS FOR DETAILS</p>
+      <p class="payoff">Life Is A Game</p>
+
+    </main>
+  </div>
+
+  <!-- ============= POPUP / DOSSIER ============= -->
+  <div class="modal" id="modal" hidden data-screen-label="Role Dossier">
+    <div class="modal__backdrop" data-close="1"></div>
+    <article class="dossier" role="dialog" aria-modal="true" aria-labelledby="dTitle">
+      <header class="dossier__head">
+        <div class="dossier__id">
+          <span class="dossier__tier" id="dTier">TIER 01 · PLAY</span>
+          <h2 class="dossier__title" id="dTitle">Role</h2>
+        </div>
+        <span class="dossier__file" id="dFile">FILE 1/7</span>
+        <button class="dossier__close" id="dClose" type="button" data-close="1" aria-label="Chiudi">✕</button>
+      </header>
+      <div class="dossier__body" id="dBody"><!-- contenuto generato --></div>
+    </article>
+  </div>
+
+  <noscript>
+    <div class="nojs">
+      <p><strong>FRANCESCO NAPPI — Life Is A Game.</strong><br />
+      Questo CV interattivo richiede JavaScript. In alternativa:
+      <a href="downloads/francesco-nappi-complete-cv.pdf">scarica il CV completo (PDF)</a>.</p>
+    </div>
+  </noscript>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+# File temporanei locali
+.thumbnail
+
+# Materiali di lavoro/importati e file esportati localmente
+/uploads/
+/downloads/
+
+# Dipendenze e build (se il progetto verrà esteso)
+node_modules/
+dist/
+build/
+.cache/
+
+# File di sistema e configurazione degli editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# File di ambiente e segreti
+.env
+.env.*
+!.env.example

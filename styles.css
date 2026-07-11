@@ -1,0 +1,702 @@
+/* =====================================================================
+   LIFE IS A GAME — styles.css
+   Layout a layer sopra le dashboard bitmap.
+   - Desktop : assets/backgrounds/dashboard-desktop.png (16:9, 2560x1440)
+   - Mobile  : assets/backgrounds/dashboard-mobile.png  (941x1672)
+   Il layout mobile è la classe `layout-m` sul <body> (gestita da
+   script.js con matchMedia: portrait oppure larghezza ≤ 820px;
+   forzabile con ?layout=m / ?layout=d per test).
+   Tutte le misure overlay sono in % / cqw / cqh della dashboard,
+   così ogni layer scala con lo sfondo senza deformazioni.
+   Coordinate avatar: in data.js. Coordinate socials/targhe/nome: qui.
+   ===================================================================== */
+
+:root {
+  --font-display: "Saira", system-ui, sans-serif;
+  --font-cond: "Saira Condensed", "Saira", system-ui, sans-serif;
+  --font-body: "Zilla Slab", Georgia, serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Mono", Menlo, Consolas, monospace;
+
+  --copper-hi: #edbd8a;
+  --copper: #b06a35;
+  --copper-deep: #7c4318;
+  --ink: #33271a;
+  --ink-soft: #5c4326;
+  --glow: rgba(255, 176, 74, 0.55);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--ink);
+  background: #efe1c6;
+}
+body.has-modal { overflow: hidden; }
+
+a { color: #8a4a1c; }
+a:hover { color: #b06a30; }
+
+img { -webkit-user-drag: none; user-select: none; }
+
+/* =====================================================  SCENE / STAGE */
+
+.scene {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(120vmax 90vmax at 50% 38%, #f8efdd 0%, #efdfc0 55%, #e5d0aa 100%);
+}
+
+.stage {
+  position: relative;
+  width: min(100vw, calc(100svh * 1.78125));
+  aspect-ratio: 2736 / 1536;
+  container-type: size;
+  background-image: url("assets/backgrounds/dashboard-desktop-v2.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* =====================================================  HEADER / NAME */
+
+.name-plate {
+  position: absolute;
+  left: 32%; top: 1.2%;
+  width: 36%; height: 8.3%;
+  display: grid; place-items: center;
+  pointer-events: none;
+}
+.name {
+  margin: 0;
+  max-width: 96%;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 2.5cqw;
+  letter-spacing: 0.14em;
+  color: #dc801c;
+  text-shadow: 0 0.09cqw 0.28cqw rgba(60, 25, 0, 0.4), 0 0.05cqw 0 rgba(50, 32, 10, 0.25);
+  white-space: nowrap;
+}
+
+/* ==================================================  LANGUAGE SWITCH */
+
+.lang {
+  position: absolute;
+  top: 4.28%; right: 10.5%;
+  display: flex; align-items: center; gap: 0.3cqw;
+  padding: 0.28cqw 0.55cqw;
+  background: linear-gradient(180deg, rgba(66, 55, 40, 0.88), rgba(38, 30, 20, 0.88));
+  border: 1px solid var(--copper-deep);
+  border-radius: 999px;
+  box-shadow: inset 0 1px 0 rgba(255, 220, 170, 0.25), 0 0.2cqw 0.5cqw rgba(30, 14, 2, 0.35);
+}
+.lang__sep { color: rgba(240, 210, 160, 0.5); font-family: var(--font-cond); font-size: 0.85cqw; }
+.lang__btn {
+  appearance: none; border: 0; cursor: pointer;
+  background: transparent;
+  font-family: var(--font-cond);
+  font-weight: 700; font-size: 1.05cqw; letter-spacing: 0.1em;
+  color: rgba(240, 214, 165, 0.66);
+  padding: 0.12cqw 0.55cqw;
+  border-radius: 999px;
+}
+.lang__btn.is-on {
+  color: #2a1505;
+  background: linear-gradient(180deg, var(--copper-hi), #c07a40 60%, #9a5526);
+  box-shadow: inset 0 1px 0 rgba(255, 235, 200, 0.7), 0 1px 2px rgba(20, 8, 0, 0.4);
+}
+.lang__btn:focus-visible { outline: 0.25cqw solid var(--glow); outline-offset: 0.15cqw; }
+
+/* ===============================  HAMBURGER + MENU (base = desktop)
+   Desktop: .hmenu è trasparente (display:contents) e lang + CV restano
+   nelle loro posizioni assolute; l'hamburger e le row-head sono nascosti.
+   Il mobile ridefinisce tutto più sotto.                              */
+.hamburger { display: none; }
+.hmenu { display: contents; }
+.rowheads { display: contents; }
+.rowhead { display: none; }
+.lang__toggle { display: none; }
+
+/* ====================================================  TIER PLATES  */
+
+.tiers { display: contents; }
+.tierplate {
+  position: absolute;
+  left: 3%; width: 4.6%;
+  display: grid; place-items: center; align-content: center;
+  text-align: center;
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 1.2cqw;
+  line-height: 1.15;
+  letter-spacing: 0.1em;
+  color: #40331e;
+  text-shadow: 0 1px 0 rgba(255, 244, 220, 0.5);
+  pointer-events: none;
+}
+.tierplate[data-tier="play"]   { top: 26.2%; height: 5.45%; }
+.tierplate[data-tier="evolve"] { top: 47.2%; height: 6.18%; }
+.tierplate[data-tier="unlock"] { top: 69.9%; height: 6.48%; font-size: 1.28cqw; }
+
+/* ================================================  COLUMN HEADERS  */
+
+.cols { display: contents; }
+.col-head {
+  position: absolute;
+  left: var(--ccx);
+  top: 14.2%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-cond);
+  font-weight: 700;
+  font-size: 2.35cqw;
+  letter-spacing: 0.28em;
+  text-indent: 0.28em;
+  color: #6f6a61;
+  /* incisione nel metallo: ombra scura in alto, luce fredda in basso */
+  text-shadow:
+    0 -0.06cqw 0.05cqw rgba(12, 10, 8, 0.75),
+    0 0.08cqw 0.05cqw rgba(224, 214, 196, 0.22);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+/* ================================================  SKILL SIGNS     */
+
+.signs { display: contents; }
+.sign {
+  position: absolute;
+  left: var(--scx);
+  top: var(--scy);
+  width: var(--sw);
+  height: auto;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  filter: drop-shadow(0 0.6cqh 0.9cqh rgba(12, 10, 6, 0.5));
+  transition: filter 0.2s ease, transform 0.2s ease;
+}
+.sign:hover, .sign:focus-visible {
+  filter: drop-shadow(0 0.6cqh 0.9cqh rgba(12, 10, 6, 0.5)) drop-shadow(0 0 0.9cqh var(--glow)) brightness(1.06);
+  transform: translate(-50%, -50%) scale(1.035);
+}
+.sign:focus-visible { outline: none; }
+
+/* ========================================================  RUOLI    */
+
+.role {
+  position: absolute;
+  left: var(--dcx); bottom: var(--db);
+  transform: translateX(-50%);
+  appearance: none; background: none; border: 0; padding: 0; margin: 0;
+  cursor: pointer;
+  display: block;
+}
+.role__img {
+  height: var(--dh);
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 0.7cqh 0.9cqh rgba(18, 19, 23, 0.42)) saturate(0.93) brightness(0.99);
+  transition: filter 0.22s ease, transform 0.22s ease;
+}
+.role__plate { display: none; }
+
+.role:hover .role__img, .role:focus-visible .role__img {
+  transform: translateY(-0.5cqh);
+  filter: drop-shadow(0 0.9cqh 1.1cqh rgba(30, 18, 6, 0.42)) drop-shadow(0 0 1.4cqh var(--glow));
+}
+.role:focus-visible { outline: 0.25cqw solid var(--glow); outline-offset: 0.3cqw; border-radius: 0.6cqw; }
+.role:active .role__img { transform: translateY(0); }
+
+/* ---- etichette ruolo sul bordo del pavimento ---- */
+.labels { display: contents; }
+.role-label {
+  position: absolute;
+  left: var(--lcx); top: var(--lcy);
+  transform: translate(-50%, -50%);
+  appearance: none;
+  padding: 0.35cqh 1.15cqw 0.45cqh;
+  background: linear-gradient(180deg, #443a2c, #251f15 70%);
+  border: 1px solid #8a5a2e;
+  border-radius: 0.35cqh;
+  box-shadow: inset 0 1px 0 rgba(255, 215, 160, 0.28), inset 0 -0.25cqh 0.4cqh rgba(0, 0, 0, 0.45), 0 0.25cqh 0.55cqh rgba(25, 12, 2, 0.45);
+  font-family: var(--font-cond);
+  font-weight: 600;
+  font-size: 1.05cqw;
+  line-height: 1.15;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  text-align: center;
+  color: #f3dfae;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: box-shadow 0.22s ease, color 0.22s ease;
+}
+.role-label:hover {
+  color: #ffe9b8;
+  box-shadow: inset 0 1px 0 rgba(255, 215, 160, 0.4), inset 0 -0.25cqh 0.4cqh rgba(0, 0, 0, 0.45), 0 0 1.1cqh var(--glow);
+}
+
+/* ==============================================  BOTTOM BAR
+   Dentro la targa inferiore dipinta (x 11.4→88.6% · y 95.3→99.7%):
+   mail a sinistra · payoff al centro · bottone CV a destra.        */
+
+.bar-mail {
+  position: absolute;
+  left: 21.2%; top: 90.1%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-cond);
+  font-weight: 600;
+  font-size: 1.4cqw;
+  letter-spacing: 0.09em;
+  color: #d98a2c;
+  text-shadow: 0 0.07cqw 0.2cqw rgba(60, 25, 0, 0.4);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.dossier-btn {
+  position: absolute;
+  left: 9.9%; top: 6.63%;
+  transform: translateY(-50%);
+  display: inline-flex; align-items: center; gap: 0.5cqw;
+  padding: 0.45cqw 1.3cqw 0.5cqw;
+  border-radius: 999px;
+  border: 0.1cqw solid #4c2810;
+  background: linear-gradient(180deg, #d29a5d, #a5643a 55%, #7c4520);
+  box-shadow: inset 0 0.14cqw 0.2cqw rgba(255, 225, 180, 0.55), inset 0 -0.24cqw 0.4cqw rgba(40, 16, 2, 0.4), 0 0.18cqw 0.45cqw rgba(30, 14, 2, 0.4);
+  font-family: var(--font-cond);
+  font-weight: 700; font-size: 1.08cqw; letter-spacing: 0.09em;
+  text-transform: uppercase; text-decoration: none;
+  color: #2a1505;
+  white-space: nowrap;
+  transition: filter 0.2s ease;
+}
+.dossier-btn:hover { filter: brightness(1.1); color: #2a1505; }
+.dossier-btn:focus-visible { outline: 0.25cqw solid var(--glow); outline-offset: 0.2cqw; }
+.dossier-btn__glyph { font-size: 0.75em; }
+
+/* ========================================================  SOCIALS
+   Monete coniate (PNG) nella targa inferiore vuota.                 */
+
+.social {
+  position: absolute;
+  left: var(--cx); top: var(--cy);
+  width: var(--w); aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  text-decoration: none;
+  transition: transform 0.18s ease, filter 0.18s ease;
+}
+.social { --w: 5.3%; --cy: 92.7%; --ring-inset: 21.5%; }
+.social[data-soc="linkedin"]  { --cx: 38.0%; }
+.social[data-soc="github"]    { --cx: 46.0%; }
+.social[data-soc="whatsapp"]  { --cx: 53.8%; }
+.social[data-soc="email"]     { --cx: 61.6%; }
+
+.social__icon {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0.25cqw 0.4cqw rgba(20, 9, 2, 0.45));
+  transition: filter 0.18s ease;
+}
+.social__ring {
+  position: absolute; inset: var(--ring-inset);
+  border-radius: 50%;
+  border: 0.16cqw solid transparent;
+  box-shadow: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.social:hover, .social:focus-visible { transform: translate(-50%, -50%) scale(1.06); }
+.social:hover .social__icon, .social:focus-visible .social__icon {
+  filter: drop-shadow(0 0.25cqw 0.5cqw rgba(20, 9, 2, 0.5)) brightness(1.12) saturate(1.08);
+}
+.social:hover .social__ring, .social:focus-visible .social__ring {
+  border-color: rgba(255, 208, 132, 0.92);
+  box-shadow: 0 0 1.1cqw 0.12cqw var(--glow), inset 0 0 0.7cqw rgba(255, 190, 100, 0.5);
+}
+.social:focus-visible { outline: none; }
+.social.is-off { cursor: default; }
+
+/* ========================================================  PAYOFF   */
+
+.payoff {
+  position: absolute;
+  left: 81%; top: 92.6%;
+  transform: translate(-50%, -52%);
+  margin: 0;
+  font-family: "Satisfy", cursive;
+  font-size: 2.2cqw;
+  line-height: 1;
+  color: #e0821c;
+  text-shadow: 0 0.1cqw 0.35cqw rgba(60, 25, 0, 0.45);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* ================================================================
+   MOBILE / PORTRAIT — dashboard verticale (body.layout-m)
+   ================================================================ */
+
+body.layout-m .scene { background: #171310; }
+
+body.layout-m .stage {
+  width: 100vw;
+  aspect-ratio: 931 / 1689;
+  background-image: url("assets/backgrounds/dashboard-mobile-v3.png");
+}
+
+/* nome dentro il banner in alto */
+body.layout-m .name-plate { left: 15%; top: 5.5%; width: 70%; height: 6%; }
+body.layout-m .name {
+  font-size: 6.6cqw; letter-spacing: 0.06em;
+  color: #2a1608;
+  text-shadow: 0 0.14cqw 0 rgba(255, 240, 205, 0.55), 0 -0.05cqw 0.05cqw rgba(0, 0, 0, 0.25);
+}
+
+/* insegne skill nascoste in mobile (affollerebbero le celle strette) */
+body.layout-m .signs { display: none; }
+
+/* --- intestazioni colonna PERFORM / CREATE / BUILD (nastro grigio in alto) --- */
+body.layout-m .col-head { top: 16.6%; font-size: 3.6cqw; letter-spacing: 0.12em; }
+
+/* --- intestazioni riga: targhette verticali a sinistra (level 1/2/next) --- */
+body.layout-m .rowhead {
+  display: grid; place-items: center;
+  position: absolute; left: 4.5%; width: 7%;
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  font-family: var(--font-cond); font-weight: 700;
+  font-size: 2.5cqw; letter-spacing: 0.22em;
+  color: #f0dcab;
+  background: linear-gradient(90deg, #443a2c, #251f15 70%);
+  border: 0.3cqw solid #8a5a2e;
+  border-radius: 1.4cqw;
+  box-shadow: inset 0 0 0 0.15cqw rgba(255, 215, 160, 0.18), 0 0.4cqw 0.7cqw rgba(20, 10, 2, 0.45);
+  text-shadow: 0 0.15cqw 0.2cqw rgba(0, 0, 0, 0.5);
+}
+body.layout-m .rowhead[data-r="play"]   { top: 21.5%; height: 17%; }
+body.layout-m .rowhead[data-r="evolve"] { top: 42%;   height: 17%; }
+body.layout-m .rowhead[data-r="unlock"] { top: 62.5%; height: 15%; }
+
+/* --- etichette ruolo sul bordo del pavimento (posizioni mobile --lmx/--lmy) --- */
+body.layout-m .labels { display: contents; }
+body.layout-m .role-label {
+  left: var(--lmx); top: var(--lmy);
+  font-size: 2.4cqw; letter-spacing: 0.08em;
+  padding: 0.5cqh 2.2cqw; border-radius: 1cqw; border-width: 0.22cqw;
+}
+
+body.layout-m .tierplate { display: none; }
+
+/* avatar */
+body.layout-m .role { left: var(--mcx); bottom: var(--mb); }
+body.layout-m .role__img { height: var(--mh); }
+body.layout-m .role:focus-visible { outline-width: 0.7cqw; }
+
+/* --- LINGUA: toggle testuale che mostra la lingua attuale (ITA/ENG) --- */
+body.layout-m .lang {
+  position: absolute; top: 2.6%; right: 3.5%; left: auto;
+  display: flex; align-items: center;
+  padding: 0; border: 0; background: none; box-shadow: none;
+  z-index: 40;
+}
+body.layout-m .lang__btn, body.layout-m .lang__sep { display: none; }
+body.layout-m .lang__toggle {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 13cqw; padding: 1.5cqw 3cqw;
+  border-radius: 1.6cqw;
+  border: 0.32cqw solid var(--copper-deep);
+  background: linear-gradient(180deg, var(--copper-hi), #c07a40 60%, #9a5526);
+  box-shadow: inset 0 1px 0 rgba(255, 235, 200, 0.6), 0 0.4cqw 0.9cqw rgba(20, 10, 2, 0.45);
+  font-family: var(--font-cond); font-weight: 700;
+  font-size: 3.6cqw; letter-spacing: 0.12em;
+  color: #2a1505; text-transform: uppercase;
+  cursor: pointer;
+}
+body.layout-m .lang__toggle:focus-visible { outline: 0.7cqw solid var(--glow); outline-offset: 0.3cqw; }
+
+/* --- FOOTER INFERIORE: monete ravvicinate · CV a sinistra · payoff a destra --- */
+body.layout-m .social { --w: 16%; --cy: 87%; }
+body.layout-m .social[data-soc="linkedin"]  { --cx: 25.25%; }
+body.layout-m .social[data-soc="github"]    { --cx: 41.75%; }
+body.layout-m .social[data-soc="whatsapp"]  { --cx: 58.25%; }
+body.layout-m .social[data-soc="email"]     { --cx: 74.75%; }
+body.layout-m .social__ring { border-width: 0.4cqw; }
+
+/* "click on avatars" rimosso; il bottone CV prende il suo posto (in basso a sinistra) */
+body.layout-m .bar-mail { display: none; }
+body.layout-m .dossier-btn {
+  display: inline-flex; position: absolute;
+  left: 6%; right: auto; top: 95.4%; transform: translateY(-50%);
+  padding: 1.3cqw 2.8cqw; font-size: 3cqw; gap: 1.1cqw; border-width: 0.3cqw;
+}
+body.layout-m .dossier-btn__label { display: none; }
+body.layout-m .dossier-btn::after {
+  content: "PDF"; font-family: var(--font-cond); font-weight: 700; letter-spacing: 0.08em;
+}
+body.layout-m .payoff {
+  display: block; right: 13%; left: auto; top: 95.4%; transform: translateY(-50%);
+  text-align: right; font-size: 4.86cqw;
+}
+
+/* ================================================================
+   POPUP / DOSSIER
+   ================================================================ */
+
+.modal {
+  position: fixed; inset: 0; z-index: 50;
+  display: grid; place-items: center;
+  padding: clamp(10px, 3vmin, 28px);
+  opacity: 0;
+  transition: opacity 0.22s ease;
+}
+/* CRITICO: senza questa regola display:grid vince su [hidden] e il
+   modal chiuso resta un overlay invisibile che blocca tutti i click */
+.modal[hidden] { display: none !important; }
+.modal.is-open { opacity: 1; }
+.modal__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(24, 15, 6, 0.52);
+  backdrop-filter: blur(2.5px);
+}
+
+.dossier {
+  position: relative;
+  width: min(94vw, 1040px);
+  max-height: min(88svh, 900px);
+  display: flex; flex-direction: column;
+  border-radius: 12px;
+  border: 2px solid #6d4423;
+  overflow: hidden;
+  background: linear-gradient(160deg, #efe3c8 0%, #e6d6b4 55%, #dfcca6 100%);
+  box-shadow: 0 30px 80px rgba(10, 5, 0, 0.55), 0 0 0 6px rgba(212, 160, 100, 0.14), inset 0 0 0 1px rgba(255, 240, 210, 0.35);
+  transform: translateY(16px) scale(0.985);
+  transition: transform 0.22s ease;
+}
+.modal.is-open .dossier { transform: none; }
+
+.dossier__head {
+  flex: none;
+  display: flex; align-items: center; gap: 16px;
+  padding: 13px 18px 12px;
+  background: linear-gradient(180deg, #7b766a, #59554b 55%, #45423b);
+  border-bottom: 3px solid #9a6432;
+  box-shadow: inset 0 1px 0 rgba(255, 250, 235, 0.25), inset 0 -6px 12px rgba(20, 14, 5, 0.35);
+}
+.dossier__id { flex: 1; min-width: 0; }
+.dossier__tier {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.24em;
+  color: #f0c98c;
+}
+.dossier__title {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: clamp(20px, 3.4vw, 30px);
+  line-height: 1.05;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: #f4ead6;
+  text-shadow: 0 2px 3px rgba(15, 10, 2, 0.5);
+}
+.dossier__file {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.18em;
+  color: #e5d3ac;
+  padding: 5px 9px;
+  border: 1px solid rgba(240, 201, 140, 0.5);
+  border-radius: 4px;
+  background: rgba(30, 22, 10, 0.35);
+  white-space: nowrap;
+}
+.dossier__close {
+  flex: none;
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid #4c2810;
+  background: linear-gradient(180deg, #d29a5d, #a5643a 55%, #7c4520);
+  box-shadow: inset 0 2px 3px rgba(255, 225, 180, 0.55), inset 0 -4px 6px rgba(40, 16, 2, 0.4), 0 3px 7px rgba(20, 8, 0, 0.45);
+  color: #2a1505;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+.dossier__close:hover { filter: brightness(1.1); }
+.dossier__close:focus-visible { outline: 3px solid var(--glow); outline-offset: 2px; }
+
+.dossier__body {
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 24px 26px 28px;
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 8px 34px;
+  align-items: start;
+  background-image: repeating-linear-gradient(0deg, rgba(120, 90, 45, 0.045) 0 1px, transparent 1px 28px);
+}
+
+.dsec { margin: 0 0 22px; }
+.dsec__h {
+  margin: 0 0 12px;
+  padding-bottom: 7px;
+  border-bottom: 2px solid #b98a52;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #7a4a1c;
+}
+.dsec__h::before { content: "■"; font-size: 8px; vertical-align: 2px; margin-right: 9px; color: #b06a30; }
+
+.dsec__lead {
+  margin: 0;
+  font-size: 16.5px;
+  line-height: 1.62;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.challenges { margin: 0; padding: 0; list-style: none; }
+.challenges li {
+  position: relative;
+  margin: 0 0 11px;
+  padding-left: 24px;
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: #3b2d1c;
+}
+.challenges li::before {
+  content: "◆";
+  position: absolute; left: 2px; top: 5px;
+  font-size: 10px;
+  color: #a55f28;
+}
+
+.skills { margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 8px; }
+.skill {
+  padding: 4px 11px 5px;
+  border: 1px solid #a9805a;
+  border-radius: 3px;
+  background: rgba(255, 250, 235, 0.55);
+  box-shadow: 0 1px 0 rgba(90, 60, 30, 0.28);
+  font-family: var(--font-cond);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+/* ---- colonna laterale: immagine + download ---- */
+.dimage {
+  position: relative;
+  margin: 0 0 22px;
+  aspect-ratio: 4 / 3;
+  border: 2px solid #8a5a30;
+  outline: 1px solid #c99a5c;
+  outline-offset: -6px;
+  background:
+    repeating-linear-gradient(45deg, rgba(90, 62, 30, 0.07) 0 12px, transparent 12px 24px),
+    linear-gradient(160deg, #ddcda9, #d3bf94);
+  overflow: hidden;
+}
+.dimage img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.dimage.is-empty img { display: none; }
+.dimage.is-empty::before {
+  content: "▦";
+  position: absolute; left: 50%; top: 44%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  color: rgba(110, 80, 40, 0.4);
+}
+.dimage__note {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  padding: 7px 10px;
+  background: rgba(240, 230, 205, 0.92);
+  border-top: 1px dashed #a58353;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: #6d5230;
+}
+
+.dlinks { display: grid; gap: 10px; }
+.dlink {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 13px;
+  border-radius: 6px;
+  border: 1.5px solid #6b4118;
+  background: linear-gradient(180deg, #cf9a60, #a06034 58%, #7f4a22);
+  box-shadow: inset 0 1px 1px rgba(255, 230, 190, 0.5), inset 0 -4px 7px rgba(40, 16, 2, 0.35), 0 3px 7px rgba(30, 14, 2, 0.28);
+  text-decoration: none;
+  color: #2a1505;
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.dlink:hover { filter: brightness(1.08); transform: translateY(-1px); color: #2a1505; }
+.dlink:focus-visible { outline: 3px solid var(--glow); outline-offset: 2px; }
+.dlink__glyph {
+  flex: none;
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: rgba(50, 22, 4, 0.2);
+  box-shadow: inset 0 1px 2px rgba(30, 12, 0, 0.4);
+  font-size: 11px;
+}
+.dlink__label {
+  flex: 1; min-width: 0;
+  font-family: var(--font-cond);
+  font-weight: 600;
+  font-size: 15.5px;
+  letter-spacing: 0.06em;
+}
+.dlink__tag {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  padding: 3px 7px;
+  border: 1px solid rgba(50, 22, 4, 0.45);
+  border-radius: 3px;
+  background: rgba(255, 240, 215, 0.35);
+  white-space: nowrap;
+}
+.dlink.is-off {
+  border-style: dashed;
+  border-color: #7c6f58;
+  background: linear-gradient(180deg, #beb299, #9d9078);
+  box-shadow: inset 0 1px 1px rgba(255, 245, 220, 0.4);
+  color: #453d2e;
+  cursor: default;
+}
+
+/* dossier: colonna singola su schermi stretti */
+@media (max-width: 760px) {
+  .dossier { width: 96vw; max-height: 92svh; border-radius: 10px; }
+  .dossier__head { gap: 10px; padding: 11px 13px 10px; }
+  .dossier__file { display: none; }
+  .dossier__body { grid-template-columns: 1fr; padding: 18px 16px 22px; gap: 0 0; }
+  .dsec__lead { font-size: 15.5px; }
+  .challenges li { font-size: 14.5px; }
+}
+
+/* ================================================================ */
+
+.nojs {
+  position: fixed; inset: auto 0 0 0; z-index: 99;
+  padding: 18px 22px;
+  background: #2b2117;
+  color: #f0e2c8;
+  font-family: var(--font-body);
+  text-align: center;
+}
+.nojs a { color: #ffb04a; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
