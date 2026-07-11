@@ -1,8 +1,8 @@
 /* =====================================================================
    LIFE IS A GAME — styles.css
    Layout a layer sopra le dashboard bitmap.
-   - Desktop : assets/backgrounds/dashboard-desktop.png (16:9, 2560x1440)
-   - Mobile  : assets/backgrounds/dashboard-mobile.png  (941x1672)
+   - Desktop : assets/backgrounds/dashboard-desktop-v2.webp (16:9)
+   - Mobile  : assets/backgrounds/dashboard-mobile-v4.webp (verticale)
    Il layout mobile è la classe `layout-m` sul <body> (gestita da
    script.js con matchMedia: portrait oppure larghezza ≤ 820px;
    forzabile con ?layout=m / ?layout=d per test).
@@ -102,7 +102,7 @@ img { -webkit-user-drag: none; user-select: none; }
 .lang__toggle {
   display: block; width: 4.6cqw; aspect-ratio: 1.59; padding: 0;
   border: 0; background: center / contain no-repeat;
-  background-image: url("assets/ui/btn-eng.png");
+  background-image: url("assets/ui/btn-eng.webp");
   font-size: 0; color: transparent; cursor: pointer;
   filter: drop-shadow(0 0.12cqw 0.2cqw rgba(20, 10, 2, 0.5));
   transition: transform 0.15s ease;
@@ -254,7 +254,7 @@ img { -webkit-user-drag: none; user-select: none; }
   transform: translateY(-50%);
   display: block;
   width: 7.5cqw; aspect-ratio: 2.676;
-  background: url("assets/ui/btn-download.png") center / contain no-repeat;
+  background: url("assets/ui/btn-download.webp") center / contain no-repeat;
   filter: drop-shadow(0 0.12cqw 0.2cqw rgba(20, 10, 2, 0.5));
   text-decoration: none;
   transition: transform 0.2s ease, filter 0.2s ease;
@@ -415,7 +415,7 @@ body.layout-m .lang__toggle {
   display: block; width: 12cqw; aspect-ratio: 1.59; padding: 0;
   border: 0; border-radius: 0; box-shadow: none;
   background: center / contain no-repeat;
-  background-image: url("assets/ui/btn-eng.png");
+  background-image: url("assets/ui/btn-eng.webp");
   font-size: 0; color: transparent; cursor: pointer;
   filter: drop-shadow(0 0.4cqw 0.6cqw rgba(20, 10, 2, 0.5));
   transition: transform 0.15s ease;
@@ -439,7 +439,7 @@ body.layout-m .dossier-btn {
   left: 22.8%; right: auto; top: 90.7%; transform: translate(-50%, -50%);
   width: 15.5cqw; aspect-ratio: 2.676; padding: 0;
   border: 0; border-radius: 0; box-shadow: none;
-  background: url("assets/ui/btn-download.png") center / contain no-repeat;
+  background: url("assets/ui/btn-download.webp") center / contain no-repeat;
   filter: drop-shadow(0 0.4cqw 0.6cqw rgba(20, 10, 2, 0.5));
   transition: transform 0.15s ease;
 }

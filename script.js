@@ -16,10 +16,26 @@
   function applyLayout() {
     var m = FORCE === "m" ? true : FORCE === "d" ? false : mql.matches;
     document.body.classList.toggle("layout-m", m);
+    ensureMobileRobot(m);
     /* Render only the avatar variant used by the active breakpoint. */
     if (document.getElementById("roles") && lang) {
       renderRoles();
       renderSigns();
+    }
+  }
+
+  function ensureMobileRobot(isMobile) {
+    var robot = document.querySelector(".m-robot");
+    if (isMobile && !robot) {
+      robot = document.createElement("img");
+      robot.className = "m-robot";
+      robot.src = "assets/skills/robot-ai-mobile.webp";
+      robot.alt = "";
+      robot.setAttribute("aria-hidden", "true");
+      robot.setAttribute("draggable", "false");
+      document.getElementById("stage").appendChild(robot);
+    } else if (!isMobile && robot) {
+      robot.remove();
     }
   }
   if (mql.addEventListener) mql.addEventListener("change", applyLayout);
@@ -342,7 +358,7 @@
     var lt = document.getElementById("langToggle");
     if (lt) {
       lt.textContent = lang === "it" ? "ENG" : "ITA";
-      lt.style.backgroundImage = 'url("assets/ui/btn-' + (lang === "it" ? "eng" : "ita") + '.png")';
+      lt.style.backgroundImage = 'url("assets/ui/btn-' + (lang === "it" ? "eng" : "ita") + '.webp")';
     }
     renderRoles();
     applyLinks();
