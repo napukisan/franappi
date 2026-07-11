@@ -37,6 +37,9 @@
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
     });
   }
+  function rich(s) {
+    return esc(s).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  }
   function ui() { return D.ui[lang]; }
   function roleContent(id) { return (D.content[lang] || {})[id]; }
   function roleMeta(id) {
@@ -191,14 +194,14 @@
     return (
       '<div class="dossier__col dossier__col--txt">' +
         '<section class="dsec"><h3 class="dsec__h">Role</h3>' +
-          '<p class="dsec__lead">' + esc(c.role) + "</p></section>" +
+          '<p class="dsec__lead">' + rich(c.role) + "</p></section>" +
         '<section class="dsec"><h3 class="dsec__h">Main Challenges</h3>' +
           '<ul class="challenges">' +
-            c.challenges.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") +
+            c.challenges.map(function (x) { return "<li>" + rich(x) + "</li>"; }).join("") +
           "</ul></section>" +
         '<section class="dsec"><h3 class="dsec__h">Unlocked Skills</h3>' +
           '<ul class="skills">' +
-            c.skills.map(function (x) { return '<li class="skill">' + esc(x) + "</li>"; }).join("") +
+            c.skills.map(function (x) { return '<li class="skill">' + rich(x) + "</li>"; }).join("") +
           "</ul></section>" +
       "</div>" +
       '<div class="dossier__col dossier__col--side">' +
