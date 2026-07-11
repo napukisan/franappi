@@ -200,7 +200,7 @@
         a.setAttribute("aria-disabled", "true");
       }
     });
-    var dl = D.downloads.complete;
+    var dl = D.downloads.complete[lang] || D.downloads.complete.it;
     var btn = document.getElementById("dossierBtn");
     if (PDF_MODE) {
       btn.href = "https://franappi.com";
