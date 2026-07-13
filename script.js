@@ -194,6 +194,7 @@
         a.setAttribute("href", href);
         a.classList.remove("is-off");
         a.removeAttribute("aria-disabled");
+        a.setAttribute("data-contact-type", k);
       } else {
         a.setAttribute("href", "#");
         a.classList.add("is-off");            /* placeholder: aggiungi il link in data.js */
@@ -238,7 +239,7 @@
         '<span class="dlink__label">' + esc(l.label) + "</span>" +
         '<span class="dlink__tag">' + esc(tagTxt) + "</span></span>";
     }
-    return '<a class="dlink" href="' + esc(href) + '"' +
+    return '<a class="dlink" data-analytics-document="' + esc(l.dl || l.label) + '" href="' + esc(href) + '"' +
       (isPdf ? " download" : ' target="_blank" rel="noopener noreferrer"') + ">" +
       '<span class="dlink__glyph" aria-hidden="true">' + glyph + "</span>" +
       '<span class="dlink__label">' + esc(l.label) + "</span>" +
@@ -277,6 +278,7 @@
     if (!c || !meta) return;
     if (!openId) lastFocus = document.activeElement;
     openId = id;
+    if (!viaHash && window.frAnalytics) window.frAnalytics.track("role_open", { role_id: id, language: lang });
 
     var t = D.tiers[meta.tier];
     document.getElementById("dTier").textContent = "TIER " + t.no + " · " + t.label;
@@ -348,7 +350,9 @@
   /* ------------------------------------------------ lingua -------- */
   function setLang(next) {
     if (next !== "it" && next !== "en") return;
+    var previousLang = lang;
     lang = next;
+    if (previousLang !== next && window.frAnalytics) window.frAnalytics.track("language_change", { selected_language: next });
     try { localStorage.setItem(LS_KEY, lang); } catch (e) {}
     document.documentElement.setAttribute("lang", lang);
     document.getElementById("langIt").classList.toggle("is-on", lang === "it");
