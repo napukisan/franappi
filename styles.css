@@ -749,21 +749,18 @@ body.layout-m .payoff {
 
 .visually-hidden-focusable:focus-within {
   position: fixed;
-  top: 1rem;
+  bottom: 1rem;
   left: 1rem;
   z-index: 1000;
   display: flex;
-  gap: 0.5rem;
-  padding: 0.75rem;
-  background: #ffffff;
-  border: 2px solid #222222;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
 .visually-hidden-focusable a {
-  color: #111111;
+  color: #ffffff;
   font-family: system-ui, sans-serif;
-  font-size: 1rem;
+  font-size: 0.7rem;
   font-weight: 600;
+  line-height: 1.25;
 }
