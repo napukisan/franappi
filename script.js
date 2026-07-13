@@ -444,4 +444,35 @@
   renderColumns();
   setLang(lang);
   onHashChange();   /* deep-link: #trainer-coach apre subito il dossier */
+
+  /* Mostra la dashboard dopo gli asset essenziali, con timeout solo come fallback. */
+  (function revealWhenReady() {
+    var root = document.documentElement;
+    var stage = document.getElementById("stage");
+    var started = Date.now();
+    var fallback = window.setTimeout(function () { root.classList.remove("loading"); }, 2800);
+    var images = Array.prototype.slice.call(stage.querySelectorAll("img"));
+    var isMobile = document.body.classList.contains("layout-m");
+    var urls = [
+      isMobile ? "assets/backgrounds/dashboard-mobile-v4.webp" : "assets/backgrounds/dashboard-desktop-v2.webp",
+      "assets/ui/btn-download.webp",
+      isMobile ? "assets/ui/btn-ita.webp" : "assets/ui/btn-eng.webp"
+    ];
+    function imageReady(img) {
+      if (img.complete && img.naturalWidth) return Promise.resolve();
+      return new Promise(function (resolve) {
+        img.addEventListener("load", resolve, { once: true });
+        img.addEventListener("error", resolve, { once: true });
+      }).then(function () { return img.decode ? img.decode().catch(function () {}) : undefined; });
+    }
+    var imagePromises = images.map(imageReady).concat(urls.map(function (src) {
+      var img = new Image(); img.src = src; return imageReady(img);
+    }));
+    var fontReady = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    Promise.allSettled(imagePromises.concat([fontReady])).then(function () {
+      window.clearTimeout(fallback);
+      root.classList.remove("loading");
+      stage.setAttribute("data-loading-ms", String(Date.now() - started));
+    });
+  })();
 })();

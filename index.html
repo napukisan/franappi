@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" class="loading">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
@@ -10,6 +10,9 @@
   <meta property="og:url" content="https://franappi.com/" />
   <meta property="og:title" content="Francesco Nappi | Creative, Trainer, Copywriter e Founder" />
   <meta property="og:description" content="Portfolio e CV interattivo di Francesco Nappi." />
+  <link rel="preload" as="image" href="assets/backgrounds/dashboard-desktop-v2.webp" media="(min-width: 821px) and (orientation: landscape)" fetchpriority="high" />
+  <link rel="preload" as="image" href="assets/backgrounds/dashboard-mobile-v4.webp" media="(max-width: 820px), (orientation: portrait)" fetchpriority="high" />
+  <script>window.setTimeout(function () { document.documentElement.classList.remove("loading"); }, 3000);</script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
