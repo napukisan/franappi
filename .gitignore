@@ -1,7 +1,36 @@
-# File temporanei locali
+# Operating systems
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*~
+tmp/
+temp/
+.cache/
 .thumbnail
 
-# Materiali di lavoro/importati e file esportati localmente
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Local tooling
+node_modules/
+__pycache__/
+*.pyc
+
+# Local source materials and exports
 /uploads/
 /downloads/*
 !/downloads/Francesco Nappi - Actor & Speaker -ENG.pdf
@@ -15,20 +44,3 @@
 !/downloads/ESCP - From zero to Startup.jfif
 !/downloads/Francesco Nappi - Life is a game - ITA.pdf
 !/downloads/Francesco Nappi - Life is a game - ENG.pdf
-
-# Dipendenze e build (se il progetto verrà esteso)
-node_modules/
-dist/
-build/
-.cache/
-
-# File di sistema e configurazione degli editor
-.DS_Store
-Thumbs.db
-.vscode/
-.idea/
-
-# File di ambiente e segreti
-.env
-.env.*
-!.env.example
