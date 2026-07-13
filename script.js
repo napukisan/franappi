@@ -360,6 +360,12 @@
       lt.textContent = lang === "it" ? "ENG" : "ITA";
       lt.style.backgroundImage = 'url("assets/ui/btn-' + (lang === "it" ? "eng" : "ita") + '.webp")';
     }
+    document.querySelectorAll(".profile-link").forEach(function (link) {
+      var active = link.getAttribute("data-lang") === lang;
+      link.classList.toggle("is-active", active);
+      link.setAttribute("aria-hidden", active ? "false" : "true");
+      link.inert = !active;
+    });
     renderRoles();
     applyLinks();
     if (openId) openDossier(openId, true);   /* stesso ruolo, testi nuovi */

@@ -764,3 +764,13 @@ body.layout-m .payoff {
   font-weight: 600;
   line-height: 1.25;
 }
+
+.profile-link:not(.is-active) {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  clip-path: inset(50%) !important;
+  white-space: nowrap !important;
+}
