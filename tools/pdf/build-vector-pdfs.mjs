@@ -52,21 +52,26 @@ const commonCss = String.raw`
   }
   html.loading .stage { opacity: 1 !important; }
   html.loading body::before { display: none !important; }
-  [id*="consent" i], [class*="consent" i] { display: none !important; }
+  #analytics-banner,
+  .analytics-banner,
+  .analytics-preferences,
+  [id*="consent" i],
+  [class*="consent" i] { display: none !important; }
 `;
 
 const coverCss = String.raw`
   body.pdf-mode .lang { display: none !important; }
+  body.pdf-mode .col-head:first-child { left: 24% !important; }
   body.pdf-mode .dossier-btn {
     display: grid !important;
     place-items: center !important;
     align-content: center !important;
-    left: 4.15% !important;
-    top: 3.75% !important;
-    width: 13.25% !important;
-    height: 11.65% !important;
+    left: 4.2% !important;
+    top: 4.05% !important;
+    width: 13.45% !important;
+    height: 10.75% !important;
     min-width: 0 !important;
-    padding: 0.75cqh 0.8cqw 0.9cqh !important;
+    padding: 0.65cqh 0.7cqw 0.75cqh !important;
     transform: none !important;
     aspect-ratio: auto !important;
     border: 0.2cqw solid #6d3b1e !important;
@@ -81,6 +86,7 @@ const coverCss = String.raw`
     filter: none !important;
     text-align: center !important;
     text-decoration: none !important;
+    z-index: 10 !important;
   }
   body.pdf-mode .dossier-btn:hover,
   body.pdf-mode .dossier-btn:focus-visible {
@@ -92,51 +98,42 @@ const coverCss = String.raw`
   body.pdf-mode .dossier-btn__label { display: none !important; }
   .pdf-site-copy {
     display: block;
-    max-width: 95%;
+    width: 100%;
     font-family: var(--font-body);
-    font-size: 1.12cqw;
+    font-size: 0.92cqw;
     font-weight: 600;
-    line-height: 1.12;
+    line-height: 1.08;
     color: #ead9b6;
     text-shadow: 0 0.08cqw 0.18cqw rgba(0, 0, 0, 0.55);
+    white-space: nowrap;
   }
   .pdf-site-domain {
     display: block;
-    margin-top: 0.35cqh;
+    margin-top: 0.45cqh;
     font-family: var(--font-display);
-    font-size: 1.28cqw;
+    font-size: 1.12cqw;
     font-weight: 700;
     line-height: 1;
     color: #e9821d;
-    letter-spacing: 0.015em;
+    letter-spacing: 0.01em;
     text-shadow: 0 0.08cqw 0.2cqw rgba(40, 15, 0, 0.55);
+    white-space: nowrap;
   }
 `;
-
-function visibleRect(el) {
-  if (!el) return null;
-  const style = getComputedStyle(el);
-  const r = el.getBoundingClientRect();
-  if (
-    style.display === "none" ||
-    style.visibility === "hidden" ||
-    Number(style.opacity) === 0 ||
-    r.width < 1 ||
-    r.height < 1
-  ) return null;
-  return {
-    x0: Math.max(0, r.left),
-    y0: Math.max(0, r.top),
-    x1: Math.min(innerWidth, r.right),
-    y1: Math.min(innerHeight, r.bottom)
-  };
-}
 
 async function settle(page) {
   await page.evaluate(async () => {
     document.documentElement.classList.remove("loading");
-    try { localStorage.setItem("fr-analytics-consent", "denied"); } catch (_) {}
-    document.querySelectorAll('[id*="consent" i], [class*="consent" i]').forEach((el) => el.remove());
+    try {
+      localStorage.setItem("franappi_analytics_consent_v1", JSON.stringify({
+        status: "denied",
+        timestamp: Date.now(),
+        version: 1
+      }));
+    } catch (_) {}
+    document.querySelectorAll(
+      '#analytics-banner, .analytics-banner, .analytics-preferences, [id*="consent" i], [class*="consent" i]'
+    ).forEach((el) => el.remove());
     await document.fonts.ready;
     await Promise.all(Array.from(document.images).map((img) => {
       if (img.complete) return Promise.resolve();
