@@ -15,7 +15,7 @@ permissions:
 jobs:
   build-vector-pdfs:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 20
 
     steps:
       - name: Check out repository
@@ -27,9 +27,14 @@ jobs:
           node-version: "20"
 
       - name: Install browser renderer
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
         run: |
           npm install --no-save playwright@1.53.2
-          npx playwright install --with-deps chromium
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME_PATH"
+          echo "CHROME_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
+          sed -i 's/chromium.launch({ headless: true })/chromium.launch({ headless: true, executablePath: process.env.CHROME_PATH })/' tools/pdf/build-vector-pdfs.mjs
 
       - name: Install PDF tooling
         run: python3 -m pip install --disable-pip-version-check pymupdf==1.26.3
