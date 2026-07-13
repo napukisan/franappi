@@ -54,20 +54,31 @@ jobs:
         run: node tools/pdf/build-vector-pdfs.mjs
 
       - name: Merge pages and rebuild PDF links
+        id: merge
+        continue-on-error: true
         env:
           PDF_OUT_DIR: artifacts/vector-pdf-pages
           PDF_FINAL_DIR: artifacts/vector-pdfs
-        run: python3 tools/pdf/merge_vector_pdfs.py
+        run: |
+          mkdir -p artifacts/vector-pdfs
+          set -o pipefail
+          python3 tools/pdf/merge_vector_pdfs.py 2>&1 | tee artifacts/vector-pdfs/build.log
 
       - name: Show validation report
+        if: steps.merge.outcome == 'success'
         run: cat artifacts/vector-pdfs/validation-report.json
 
-      - name: Upload vector PDFs
+      - name: Upload PDF build outputs
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: francesco-nappi-vector-pdfs
           path: |
-            artifacts/vector-pdfs/*.pdf
-            artifacts/vector-pdfs/validation-report.json
+            artifacts/vector-pdfs/**
+            artifacts/vector-pdf-pages/**
           if-no-files-found: error
           retention-days: 14
+
+      - name: Fail after diagnostics upload
+        if: steps.merge.outcome != 'success'
+        run: exit 1
