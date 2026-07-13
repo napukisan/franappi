@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1
+
+- Rimosso il contatto WhatsApp.
+- Aggiornati i PDF del CV.
+- Miglioramenti privacy.
+
 ## 1.0.0
 
 - Dashboard desktop e mobile con sette ruoli professionali.
