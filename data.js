@@ -29,9 +29,8 @@ window.LIAG = {
     links: {
       linkedin: "https://www.linkedin.com/in/franappi",
       github:   "https://github.com/napukisan",
-      whatsapp: "https://wa.me/393331825543",
       mail:     "mailto:franappi@gmail.com",
-      /* non più nel footer (sostituiti da GitHub/WhatsApp/Email): tenuti per uso futuro */
+      /* non più nel footer: tenuti per uso futuro */
       facebook: "https://www.facebook.com/franappi",
       instagram: "https://www.instagram.com/napukisan/"
     }
@@ -125,7 +124,7 @@ window.LIAG = {
       open: "Apri",
       openRole: "Apri dossier",
       imageMissing: "Immagine in arrivo",
-      socials: { linkedin: "LinkedIn", github: "GitHub (link da aggiungere)", whatsapp: "WhatsApp (link da aggiungere)", email: "Email" }
+      socials: { linkedin: "LinkedIn", github: "GitHub (link da aggiungere)", email: "Email" }
     },
     en: {
       fullDossier: "Full resume (PDF)",
@@ -135,7 +134,7 @@ window.LIAG = {
       open: "Open",
       openRole: "Open dossier",
       imageMissing: "Image coming soon",
-      socials: { linkedin: "LinkedIn", github: "GitHub (add link)", whatsapp: "WhatsApp (add link)", email: "Email" }
+      socials: { linkedin: "LinkedIn", github: "GitHub (add link)", email: "Email" }
     }
   },
 

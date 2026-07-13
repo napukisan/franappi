@@ -285,10 +285,9 @@ body.pdf-mode .dossier-btn__label { display: block; }
   transition: transform 0.18s ease, filter 0.18s ease;
 }
 .social { --w: 5.3%; --cy: 92.7%; --ring-inset: 21.5%; }
-.social[data-soc="linkedin"]  { --cx: 38.0%; }
-.social[data-soc="github"]    { --cx: 46.0%; }
-.social[data-soc="whatsapp"]  { --cx: 53.8%; }
-.social[data-soc="email"]     { --cx: 61.6%; }
+.social[data-soc="linkedin"]  { --cx: 42%; }
+.social[data-soc="github"]    { --cx: 50%; }
+.social[data-soc="email"]     { --cx: 58%; }
 
 .social__icon {
   position: absolute; inset: 0;
@@ -425,10 +424,9 @@ body.layout-m .lang__toggle:focus-visible { outline: 0.7cqw solid var(--glow); o
 
 /* --- FOOTER INFERIORE: monete ravvicinate · CV a sinistra · payoff a destra --- */
 body.layout-m .social { --w: 16%; --cy: 80.5%; }
-body.layout-m .social[data-soc="linkedin"]  { --cx: 25.25%; }
-body.layout-m .social[data-soc="github"]    { --cx: 41.75%; }
-body.layout-m .social[data-soc="whatsapp"]  { --cx: 58.25%; }
-body.layout-m .social[data-soc="email"]     { --cx: 74.75%; }
+body.layout-m .social[data-soc="linkedin"]  { --cx: 33.5%; }
+body.layout-m .social[data-soc="github"]    { --cx: 50%; }
+body.layout-m .social[data-soc="email"]     { --cx: 66.5%; }
 body.layout-m .social__ring { border-width: 0.4cqw; }
 
 /* "click on avatars" rimosso; il bottone CV prende il suo posto (in basso a sinistra) */

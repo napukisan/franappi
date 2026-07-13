@@ -184,7 +184,7 @@
   function applyLinks() {
     var L = D.profile.links;
     var S = ui().socials;
-    var map = { linkedin: L.linkedin, github: L.github, whatsapp: L.whatsapp, email: L.mail };
+    var map = { linkedin: L.linkedin, github: L.github, email: L.mail };
     document.querySelectorAll(".social").forEach(function (a) {
       var k = a.getAttribute("data-soc");
       var href = map[k] || "";
