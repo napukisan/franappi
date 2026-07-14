@@ -1,0 +1,89 @@
+name: Build vector PDFs
+
+on:
+  push:
+    branches:
+      - build/vector-pdfs
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-vector-pdfs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install browser renderer
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: "1"
+        run: |
+          npm install --no-save playwright@1.53.2
+          CHROME_PATH="$(command -v google-chrome || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME_PATH"
+          echo "CHROME_PATH=$CHROME_PATH" >> "$GITHUB_ENV"
+          sed -i 's/chromium.launch({ headless: true })/chromium.launch({ headless: true, executablePath: process.env.CHROME_PATH })/' tools/pdf/build-vector-pdfs.mjs
+
+      - name: Install PDF tooling
+        run: python3 -m pip install --disable-pip-version-check pymupdf==1.26.3
+
+      - name: Start local site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/franappi-pdf-server.log 2>&1 &
+          echo $! > /tmp/franappi-pdf-server.pid
+          for attempt in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/ > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/franappi-pdf-server.log
+          exit 1
+
+      - name: Render pages from repository HTML
+        env:
+          PDF_BASE_URL: http://127.0.0.1:4173/
+          PDF_OUT_DIR: artifacts/vector-pdf-pages
+        run: node tools/pdf/build-vector-pdfs.mjs
+
+      - name: Merge pages and rebuild PDF links
+        id: merge
+        continue-on-error: true
+        env:
+          PDF_OUT_DIR: artifacts/vector-pdf-pages
+          PDF_FINAL_DIR: artifacts/vector-pdfs
+        run: |
+          mkdir -p artifacts/vector-pdfs
+          set -o pipefail
+          python3 tools/pdf/merge_vector_pdfs.py 2>&1 | tee artifacts/vector-pdfs/build.log
+
+      - name: Show validation report
+        if: steps.merge.outcome == 'success'
+        run: cat artifacts/vector-pdfs/validation-report.json
+
+      - name: Upload PDF build outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: francesco-nappi-vector-pdfs
+          path: |
+            artifacts/vector-pdfs/**
+            artifacts/vector-pdf-pages/**
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Fail after diagnostics upload
+        if: steps.merge.outcome != 'success'
+        run: exit 1
